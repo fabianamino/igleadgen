@@ -134,7 +134,8 @@ const Sidebar = () => {
                     href={route.href}
                     className={cn(
                       "text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition-all duration-300 relative overflow-hidden",
-                      "hover:bg-gradient-to-r hover:from-[#f059da]/10 hover:to-transparent",
+                      "hover:bg-gradient-to-r hover:from-[#f059da]/10 hover:to-transparent hover:translate-x-1",
+                      "active:translate-x-0.5 active:scale-[0.99]",
                       pathname === route.href 
                         ? "bg-gradient-to-r from-[#f059da]/20 to-transparent text-white" 
                         : "text-zinc-400 hover:text-zinc-200",
@@ -145,15 +146,17 @@ const Sidebar = () => {
                     )}
                     <div className="flex items-center flex-1 relative">
                       <route.icon className={cn(
-                        "h-5 w-5 mr-3 transition-transform duration-300",
-                        "group-hover:scale-110",
+                        "h-5 w-5 mr-3 transition-all duration-300",
+                        "group-hover:scale-110 group-hover:rotate-3",
                         pathname === route.href ? "text-[#f059da]" : "text-zinc-400 group-hover:text-[#f059da]"
                       )} />
-                      <span className="relative">
+                      <span className="relative transition-all duration-300 group-hover:font-medium">
                         {route.label}
-                        {pathname === route.href && (
-                          <span className="absolute -bottom-1 left-0 right-0 h-[1px] bg-gradient-to-r from-[#f059da]/50 to-transparent" />
-                        )}
+                        <span className={cn(
+                          "absolute -bottom-1 left-0 right-0 h-[1px] transform scale-x-0 transition-transform duration-300",
+                          "bg-gradient-to-r from-[#f059da]/50 to-transparent group-hover:scale-x-100",
+                          pathname === route.href && "scale-x-100"
+                        )} />
                       </span>
                     </div>
                   </Link>
@@ -168,7 +171,9 @@ const Sidebar = () => {
         <Link
           href="/auth/logout"
           className="text-sm group flex p-3 w-full justify-start font-medium cursor-pointer rounded-lg transition-all duration-300 relative overflow-hidden
-            hover:bg-gradient-to-r hover:from-[#f059da]/10 hover:to-transparent text-zinc-400 hover:text-zinc-200"
+            hover:bg-gradient-to-r hover:from-[#f059da]/10 hover:to-transparent hover:translate-x-1
+            active:translate-x-0.5 active:scale-[0.99]
+            text-zinc-400 hover:text-zinc-200"
         >
           <div className="flex items-center flex-1">
             <LogOut className="h-5 w-5 mr-3 text-zinc-400 group-hover:text-[#f059da] transition-transform duration-300 group-hover:scale-110" />
