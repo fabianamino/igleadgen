@@ -7,51 +7,49 @@ const DashboardLayout = ({
   children: React.ReactNode;
 }) => {
   return (
-    <div className="min-h-screen relative bg-black overflow-hidden">
-      {/* 3D Grid background */}
-      <div className="fixed inset-0 z-0 before:content-[''] before:absolute before:inset-0 before:bg-[linear-gradient(transparent,#000)]">
+    <div className="h-full relative bg-[#0a0a0a]">
+      {/* Subtle background */}
+      <div className="fixed inset-0 -z-10">
+        {/* Very faint grid */}
         <div
           style={{
             position: 'absolute',
             inset: '-50% -50%',
             transform: 'rotateX(75deg)',
             backgroundImage: `
-              linear-gradient(90deg, rgba(240, 89, 218, 0.3) 1px, transparent 0),
-              linear-gradient(rgba(240, 89, 218, 0.3) 1px, transparent 0)
+              linear-gradient(90deg, rgba(240, 89, 218, 0.03) 1px, transparent 1px),
+              linear-gradient(rgba(240, 89, 218, 0.03) 1px, transparent 1px)
             `,
-            backgroundSize: '100px 100px',
+            backgroundSize: '150px 150px',
             backgroundPosition: 'center',
             transformOrigin: 'center center',
-            perspective: '1000px',
           }}
         />
+
+        {/* Soft gradients */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-[#0a0a0a]" />
+        
+        {/* Very subtle glow */}
+        <div className="fixed inset-x-0 bottom-0 h-[50vh] bg-[#f059da]/[0.02] blur-[150px]" />
       </div>
 
-      {/* Fade effects */}
-      <div className="fixed inset-0 z-10 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-transparent" />
-      </div>
+      {/* Content */}
+      <div className="flex h-full">
+        {/* Sidebar */}
+        <div className="hidden md:flex h-full md:w-72 md:flex-col md:fixed md:inset-y-0 z-50">
+          <Sidebar />
+        </div>
 
-      {/* Glow effect */}
-      <div className="fixed inset-x-0 bottom-0 z-5 h-[40vh] bg-[#f059da]/10 blur-[100px]" />
-
-      {/* Sidebar */}
-      <div className="hidden h-full md:flex md:w-72 md:flex-col md:fixed md:inset-y-0 z-20">
-        <Sidebar />
-      </div>
-
-      {/* Main content */}
-      <div className="md:pl-72 flex flex-col min-h-screen relative z-20">
-        <Navbar />
-        <main className="flex-1 px-4 py-6 md:px-8 md:py-8 mt-16 max-w-7xl mx-auto w-full">
-          <div className="space-y-6">
+        {/* Main content */}
+        <main className="md:pl-72 flex-1 min-h-screen">
+          <Navbar />
+          <div className="container mx-auto px-4 py-6 mt-20">
             {children}
           </div>
         </main>
       </div>
     </div>
   );
-}
- 
+};
+
 export default DashboardLayout;

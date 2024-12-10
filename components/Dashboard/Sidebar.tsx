@@ -26,8 +26,8 @@ const font = Jost({
 const routes = {
   general: [
     {
-      label: "General",
-      icon: Home,
+      label: "Dashboard",
+      icon: LayoutDashboard,
       href: "/dashboard",
       color: "text-[#f059da]",
     },
@@ -40,47 +40,25 @@ const routes = {
   ],
   features: [
     {
-      label: "Core Features",
-      icon: Hash,
-      href: "/dashboard/features",
-      color: "text-[#f059da]",
-    },
-    {
       label: "Hashtags",
       icon: Hash,
       href: "/dashboard/hashtags",
       color: "text-[#f059da]",
     },
-  ],
-  analytics: [
     {
-      label: "Insights",
+      label: "Analytics",
       icon: LineChart,
-      href: "/dashboard/insights",
+      href: "/dashboard/analytics",
       color: "text-[#f059da]",
     },
     {
-      label: "Trends",
+      label: "Growth",
       icon: TrendingUp,
-      href: "/dashboard/trends",
+      href: "/dashboard/growth",
       color: "text-[#f059da]",
     },
   ],
-  content: [
-    {
-      label: "New",
-      icon: PlusCircle,
-      href: "/dashboard/new",
-      color: "text-[#f059da]",
-    },
-    {
-      label: "Reports",
-      icon: FileText,
-      href: "/dashboard/reports",
-      color: "text-[#f059da]",
-    },
-  ],
-  system: [
+  settings: [
     {
       label: "Settings",
       icon: Settings,
