@@ -1,5 +1,6 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -209,12 +210,12 @@ export default function ProfilePage() {
                   </div>
                   <Progress
                     value={achievement.progress}
-                    className="h-1 mt-2"
-                    indicatorClassName={`${
+                    className={cn(
+                      "h-1 mt-2 bg-zinc-800",
                       achievement.progress === 100
-                        ? "bg-gradient-to-r from-[#f059da] to-purple-600"
-                        : "bg-[#f059da]"
-                    }`}
+                        ? "[&>div]:bg-gradient-to-r [&>div]:from-[#f059da] [&>div]:to-purple-600"
+                        : "[&>div]:bg-[#f059da]"
+                    )}
                   />
                 </div>
               </div>
