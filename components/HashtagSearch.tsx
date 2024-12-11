@@ -80,7 +80,7 @@ export const HashtagSearch = () => {
         setError(result.error);
       } else {
         console.log('Setting hashtag data:', result);
-        setHashtagData(result);
+        setHashtagData(result.data);
       }
     } catch (err) {
       console.error('Search error:', err);
