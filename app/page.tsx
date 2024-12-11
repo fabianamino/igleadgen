@@ -17,7 +17,7 @@ const HomePage = () => {
       icon: Hash,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/hashtags",
+      href: "/hashtag-search",
       description: "Find trending hashtags for your niche",
       stats: "450M+ hashtags"
     },
@@ -123,34 +123,31 @@ const HomePage = () => {
           </div>
 
           {/* Tools Grid - Compact version */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 h-[calc(100%-6rem)] overflow-y-auto relative">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-1.5 h-[calc(100%-6rem)] overflow-y-auto relative">
             {tools.map((tool) => (
-              <Card
+              <button
                 key={tool.label}
-                className="group relative cursor-pointer border border-white/[0.08] hover:border-[#f059da]/20 transition-all duration-300 bg-transparent"
+                className="group relative cursor-pointer border border-white/[0.08] hover:border-[#f059da]/20 bg-gradient-to-br from-white/[0.03] to-transparent hover:from-[#f059da]/10 hover:to-[#f059da]/[0.02] active:from-[#f059da]/5 active:to-transparent transition-all duration-300 rounded-md overflow-hidden"
                 onClick={() => router.push(tool.href)}
               >
-                <div className="p-2 h-full flex flex-col relative">
+                <div className="px-2 py-1 h-full flex items-center space-x-2 relative">
                   <div className={cn(
-                    "p-1.5 w-8 h-8 rounded-lg mb-2 transition-transform duration-300 group-hover:scale-110",
-                    "bg-gradient-to-br from-[#f059da]/20 to-[#f059da]/5"
+                    "p-1 w-5 h-5 rounded-md flex-shrink-0 transition-all duration-300",
+                    "bg-white/5 group-hover:bg-[#f059da]/10 group-active:bg-[#f059da]/5"
                   )}>
-                    <tool.icon className="w-5 h-5 text-[#f059da]" />
+                    <tool.icon className="w-3 h-3 text-white/70 group-hover:text-[#f059da] transition-all duration-300" />
                   </div>
-                  <div className="space-y-0.5 flex-grow">
-                    <h3 className="font-semibold text-xs text-white/90 group-hover:text-[#f059da] transition-colors">
+                  <div className="min-w-0 flex-grow">
+                    <h3 className="font-medium text-[0.7rem] text-white/80 group-hover:text-white transition-colors truncate">
                       {tool.label}
                     </h3>
-                    <p className="text-white/60 text-[0.65rem] line-clamp-2">
+                    <p className="text-white/50 text-[0.6rem] truncate group-hover:text-white/60 transition-colors">
                       {tool.description}
                     </p>
                   </div>
-                  <div className="flex items-center justify-between mt-1 pt-1 border-t border-white/[0.08]">
-                    <span className="text-[0.6rem] text-white/40">{tool.stats}</span>
-                    <ArrowRight className="w-3 h-3 text-white/30 group-hover:text-[#f059da] group-hover:translate-x-0.5 transition-all" />
-                  </div>
+                  <ArrowRight className="w-3 h-3 text-white/30 group-hover:text-white/70 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                 </div>
-              </Card>
+              </button>
             ))}
           </div>
 

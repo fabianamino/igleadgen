@@ -41,7 +41,7 @@ interface InstagramApiResponse {
       name?: string;
       subtitle?: string;
     };
-    items?: InstagramItem[];
+    items: InstagramItem[]; 
   };
 }
 
@@ -99,48 +99,46 @@ export async function GET(request: Request) {
       console.log('Raw API response data:', data);
 
       // Ensure we have the correct data structure
-      const responseData = {
-        data: {
-          additional_data: {
-            formatted_media_count: data.data?.additional_data?.formatted_media_count || '0',
-            media_count: data.data?.additional_data?.media_count || 0,
-            name: data.data?.additional_data?.name || hashtag,
-            subtitle: data.data?.additional_data?.subtitle
-          },
-          items: data.data?.items?.map(item => ({
-            id: item.id,
-            code: item.code,
-            taken_at: item.taken_at,
-            pk: item.pk,
-            media_type: item.media_type,
-            caption_text: item.caption?.text || '',
-            like_count: item.like_count,
-            comment_count: item.comment_count,
-            thumbnail_url: item.image_versions2?.candidates?.[0]?.url || item.thumbnail_url,
-            video_url: item.video_url,
-            user: item.user ? {
-              pk: item.user.pk,
-              username: item.user.username,
-              full_name: item.user.full_name,
-              profile_pic_url: item.user.profile_pic_url
-            } : undefined
-          })) || []
-        }
+      const responseData: InstagramApiResponse['data'] = {
+        additional_data: {
+          formatted_media_count: data.data?.additional_data?.formatted_media_count || '0',
+          media_count: data.data?.additional_data?.media_count || 0,
+          name: data.data?.additional_data?.name || hashtag,
+          subtitle: data.data?.additional_data?.subtitle
+        },
+        items: (data.data?.items?.map((item: InstagramItem) => ({
+          id: item.id,
+          code: item.code,
+          taken_at: item.taken_at,
+          pk: item.pk,
+          media_type: item.media_type,
+          caption_text: item.caption?.text || '',
+          like_count: item.like_count,
+          comment_count: item.comment_count,
+          thumbnail_url: item.image_versions2?.candidates?.[0]?.url || item.thumbnail_url,
+          video_url: item.video_url,
+          user: item.user ? {
+            pk: item.user.pk,
+            username: item.user.username,
+            full_name: item.user.full_name,
+            profile_pic_url: item.user.profile_pic_url
+          } : undefined
+        })) || []) // Ensure items is always an array
       };
 
       console.log('Transformed response:', {
-        additional_data: responseData.data.additional_data,
-        itemsCount: responseData.data.items.length
+        additional_data_count: responseData.additional_data?.media_count || 0,
+        items_count: responseData.items.length // Now safe to access length
       });
 
       if (data.data?.items?.[0]) {
-        console.log('Sample post structure:', {
+        console.log('Sample item comparison:', {
           original: data.data.items[0],
-          transformed: responseData.data.items[0]
+          transformed: responseData.items[0]
         });
       }
       
-      return NextResponse.json(responseData);
+      return NextResponse.json({ data: responseData });
 
     } catch (parseError) {
       console.error('Parse error:', parseError);

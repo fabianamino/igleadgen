@@ -15,14 +15,7 @@ const RegisterImage = () => {
           priority
         />
       </div>
-      <div className="mt-8 text-center relative z-10">
-        <h2 className="text-2xl font-semibold text-[#f059da] mb-4 text-shadow">
-          Join Our Community
-        </h2>
-        <p className="text-white/90 text-sm max-w-md leading-relaxed">
-          Get started with powerful Instagram analytics, audience insights, and growth tools designed to elevate your Instagram presence.
-        </p>
-      </div>
+
     </div>
   );
 };
