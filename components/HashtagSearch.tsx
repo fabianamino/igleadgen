@@ -59,6 +59,7 @@ const formatCount = (count: number): string => {
 
 export const HashtagSearch = () => {
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchQuery, setSearchQuery] = useState('');
   const [hashtagData, setHashtagData] = useState<HashtagData | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -84,6 +85,7 @@ export const HashtagSearch = () => {
 
     setLoading(true);
     setError(null);
+    setCurrentPage(1); // Reset to first page on new search
 
     try {
       console.log('Searching for hashtag:', term);
@@ -106,17 +108,18 @@ export const HashtagSearch = () => {
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (searchTerm) {
-        searchHashtag(searchTerm);
-      } else {
-        setHashtagData(null);
-      }
-    }, 500);
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      setSearchQuery(searchTerm);
+      searchHashtag(searchTerm.trim());
+    }
+  };
 
-    return () => clearTimeout(timer);
-  }, [searchTerm]);
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -125,13 +128,14 @@ export const HashtagSearch = () => {
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          onKeyPress={handleKeyPress}
           placeholder="Enter hashtag..."
           className="flex-1 p-2 border rounded"
         />
         <button
-          onClick={() => searchHashtag(searchTerm)}
-          disabled={loading}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50"
+          onClick={handleSearch}
+          disabled={loading || !searchTerm.trim()}
+          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors duration-200"
         >
           {loading ? 'Searching...' : 'Search'}
         </button>
@@ -165,7 +169,7 @@ export const HashtagSearch = () => {
               )}
               <div>
                 <h2 className="text-3xl font-bold text-gray-800 mb-1">
-                  #{hashtagData.additional_data.name || searchTerm}
+                  #{hashtagData.additional_data.name || searchQuery}
                 </h2>
                 {hashtagData.additional_data.formatted_media_count && (
                   <p className="text-lg text-blue-600 font-semibold">
@@ -276,7 +280,7 @@ export const HashtagSearch = () => {
             </>
           ) : (
             <div className="text-center py-12 bg-gray-50 rounded-lg">
-              <p className="text-gray-500 text-lg">No posts found for #{searchTerm}</p>
+              <p className="text-gray-500 text-lg">No posts found for #{searchQuery}</p>
             </div>
           )}
         </div>
