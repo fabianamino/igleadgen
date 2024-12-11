@@ -1,4 +1,4 @@
-import { HashtagSearch } from '@/components/HashtagSearch';
+import HashtagSearch  from '@/components/HashtagSearch';
 
 export default function HashtagSearchPage() {
   return (

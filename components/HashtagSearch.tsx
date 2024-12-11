@@ -256,13 +256,13 @@ export default function HashtagSearch() {
                   {formatCount(hashtagData.additional_data?.media_count || 0)}
                 </p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className="p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-gray-700">Average Likes</h3>
                 <p className="text-3xl font-bold text-blue-600">
                   {formatCount(avgLikes)}
                 </p>
               </div>
-              <div className="bg-gray-50 p-4 rounded-lg">
+              <div className=" p-4 rounded-lg">
                 <h3 className="text-lg font-semibold text-gray-700">Average Comments</h3>
                 <p className="text-3xl font-bold text-blue-600">
                   {formatCount(avgComments)}
@@ -272,7 +272,7 @@ export default function HashtagSearch() {
           </div>
 
           {/* Posts Grid */}
-          <div className="bg-white rounded-lg shadow-lg p-6">
+          <div className="rounded-lg shadow-lg p-6">
             <h2 className="text-2xl font-bold mb-6">Recent Posts</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {getCurrentPagePosts().map((item) => (

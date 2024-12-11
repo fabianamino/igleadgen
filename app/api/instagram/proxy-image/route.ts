@@ -19,7 +19,6 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error proxying image:', error);
     return new NextResponse('Error fetching image', { status: 500 });
   }
 }

@@ -24,7 +24,6 @@ export async function GET(request: Request) {
       },
     });
   } catch (error) {
-    console.error('Error proxying Instagram image:', error);
     return new Response('Error loading image', { status: 500 });
   }
 }
