@@ -33,7 +33,7 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <div className="h-full relative bg-[#0a0a0a]">
+          <div className="relative bg-[#0a0a0a]">
             {/* Content */}
             <div className="flex h-full">
               {/* Sidebar */}
