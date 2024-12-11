@@ -49,6 +49,15 @@ const HomePage = () => {
       stats: "24/7 Active"
     },
     {
+      label: "Hashtag Generator",
+      icon: Bot,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/hashtag-generator",
+      description: "Generate AI-powered hashtags for your posts",
+      stats: "AI-powered"
+    },
+    {
       label: "Content Scheduler",
       icon: Clock,
       color: "text-[#f059da]",
@@ -123,35 +132,37 @@ const HomePage = () => {
           </div>
 
           {/* Tools Grid - Compact version */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 h-[calc(100%-6rem)] overflow-y-auto relative">
-            {tools.map((tool) => (
-              <button
-                key={tool.label}
-                className="group relative cursor-pointer border border-white/[0.08] hover:border-[#f059da]/20 bg-gradient-to-br from-white/[0.05] to-transparent hover:from-[#f059da]/10 hover:to-[#f059da]/[0.02] active:from-[#f059da]/5 active:to-transparent transition-all duration-300 rounded-lg overflow-hidden"
-                onClick={() => router.push(tool.href)}
-              >
-                {/* Shine overlay */}
-                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div className="px-3 py-2 h-full flex items-center space-x-3 relative">
-                  <div className={cn(
-                    "p-1.5 w-7 h-7 rounded-lg flex-shrink-0 transition-all duration-300",
-                    "bg-white/[0.03] group-hover:bg-[#f059da]/10 group-active:bg-[#f059da]/5"
-                  )}>
-                    <tool.icon className="w-4 h-4 text-white/80 group-hover:text-[#f059da] transition-all duration-300" />
+          <div className="flex-1 flex items-center justify-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl w-full">
+              {tools.map((tool) => (
+                <button
+                  key={tool.label}
+                  className="group relative cursor-pointer border border-white/[0.08] hover:border-[#f059da]/20 bg-gradient-to-br from-white/[0.05] to-transparent hover:from-[#f059da]/10 hover:to-[#f059da]/[0.02] active:from-[#f059da]/5 active:to-transparent transition-all duration-300 rounded-lg overflow-hidden"
+                  onClick={() => router.push(tool.href)}
+                >
+                  {/* Shine overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <div className="px-2.5 py-2 h-full flex items-center space-x-2.5 relative">
+                    <div className={cn(
+                      "p-1 w-6 h-6 rounded-lg flex-shrink-0 transition-all duration-300",
+                      "bg-white/[0.03] group-hover:bg-[#f059da]/10 group-active:bg-[#f059da]/5"
+                    )}>
+                      <tool.icon className="w-4 h-4 text-white/80 group-hover:text-[#f059da] transition-all duration-300" />
+                    </div>
+                    <div className="min-w-0 flex-grow">
+                      <h3 className="font-semibold text-[0.8rem] text-white/90 group-hover:text-white transition-colors truncate leading-tight">
+                        {tool.label}
+                      </h3>
+                      <p className="text-white/50 text-[0.65rem] truncate group-hover:text-white/70 transition-colors leading-tight mt-0.5">
+                        {tool.description}
+                      </p>
+                    </div>
+                    <ArrowRight className="w-3.5 h-3.5 text-white/30 group-hover:text-white/70 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </div>
-                  <div className="min-w-0 flex-grow">
-                    <h3 className="font-semibold text-[0.85rem] text-white/90 group-hover:text-white transition-colors truncate leading-tight">
-                      {tool.label}
-                    </h3>
-                    <p className="text-white/50 text-[0.7rem] truncate group-hover:text-white/70 transition-colors leading-tight mt-0.5">
-                      {tool.description}
-                    </p>
-                  </div>
-                  <ArrowRight className="w-4 h-4 text-white/30 group-hover:text-white/70 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
-                </div>
-              </button>
-            ))}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Logout Button */}
