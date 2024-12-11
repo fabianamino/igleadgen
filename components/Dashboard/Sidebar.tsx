@@ -82,17 +82,22 @@ const Sidebar = () => {
       
       <div className="px-3 py-2 flex-1 relative z-10">
         <Link href="/dashboard" className="flex items-center pl-3 mb-14 group">
-          <div className="relative w-10 h-10 mr-4 transform group-hover:scale-105 transition-transform">
+          <div className="relative w-10 h-10 mr-3 transform group-hover:scale-110 transition-all duration-300">
+            <div className="absolute inset-0 bg-gradient-to-br from-[#f059da]/20 to-[#f059da]/5 rounded-xl blur-md group-hover:blur-lg transition-all duration-300" />
             <Image
-              fill
-              alt="Logo"
               src="/instagram-icon.png"
-              className="object-contain drop-shadow-lg"
+              alt="Logo"
+              fill
+              className="object-contain drop-shadow-lg z-10 relative"
+              priority
             />
+            {/* Shine effect */}
+            <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 rotate-45" />
           </div>
-          <h1 className={cn("text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#f059da] to-[#f059da]/70", 
+          <h1 className={cn(
+            "text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-white/90", 
             font.className,
-            "group-hover:to-[#f059da] transition-all duration-300"
+            "group-hover:from-[#f059da] group-hover:to-[#f059da]/80 transition-all duration-300"
           )}>
             IgLeadGen
           </h1>
