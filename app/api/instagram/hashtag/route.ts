@@ -1,5 +1,10 @@
 import { NextResponse } from 'next/server';
 
+interface InstagramError {
+  message: string;
+  status?: number;
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -9,7 +14,7 @@ export async function GET(request: Request) {
 
     if (!hashtag) {
       console.log('No hashtag provided');
-      return new Response('Hashtag is required', { status: 400 });
+      return NextResponse.json({ error: 'Hashtag parameter is required' }, { status: 400 });
     }
 
     const rapidApiKey = process.env.RAPIDAPI_KEY;
@@ -17,7 +22,7 @@ export async function GET(request: Request) {
 
     if (!rapidApiKey) {
       console.error('RapidAPI key not found');
-      return new Response('API configuration error', { status: 500 });
+      return NextResponse.json({ error: 'API configuration error' }, { status: 500 });
     }
 
     const options = {
@@ -40,12 +45,15 @@ export async function GET(request: Request) {
     console.log('RapidAPI Response Status:', response.status);
     console.log('RapidAPI Response Headers:', Object.fromEntries(response.headers.entries()));
 
-    // Get the raw response and pass it through
+    if (!response.ok) {
+      throw new Error(`Instagram API responded with status: ${response.status}`);
+    }
+
     const rawData = await response.text();
     console.log('RapidAPI Raw Response:', rawData);
 
     // Return the raw response exactly as received
-    return new Response(rawData, {
+    return NextResponse.json({ data: rawData }, {
       status: response.status,
       headers: {
         'Content-Type': response.headers.get('content-type') || 'application/json'
@@ -54,11 +62,12 @@ export async function GET(request: Request) {
 
   } catch (error) {
     console.error('Error in Instagram API route:', error);
-    return new Response(JSON.stringify({ error: 'Internal Server Error', details: error.message }), {
-      status: 500,
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
+    
+    const errorResponse: InstagramError = {
+      message: error instanceof Error ? error.message : 'An unexpected error occurred',
+      status: 500
+    };
+
+    return NextResponse.json({ error: errorResponse.message }, { status: errorResponse.status });
   }
 }
