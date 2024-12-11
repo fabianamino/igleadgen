@@ -5,6 +5,7 @@
 export const publicRoutes = [
   "/auth/new-verification",
   "/automation/dm",
+  "/hashtag-search",
   "/",
   "/hashtags",  
   "/users",  
@@ -20,6 +21,7 @@ export const publicRoutes = [
   "/auth/login",
   "/auth/register",
   "/auth/error",
+  "/api/instagram/hashtag",  
 ];
 
 /*

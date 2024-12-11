@@ -1,5 +1,5 @@
 import db from "@/lib/db";
-import { Subscription, SubscriptionStatus } from "@prisma/client";
+import { Subscription, SubscriptionStatus, SubscriptionPlan } from "@prisma/client";
 
 interface CreateSubscriptionData {
   userId: string;

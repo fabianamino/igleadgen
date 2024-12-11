@@ -53,7 +53,8 @@ export async function getUsersWithExpiringSubscriptions(daysThreshold: number = 
           select: {
             id: true,
             email: true,
-            name: true
+            firstName: true,
+            lastName: true
           }
         }
       }

@@ -33,6 +33,8 @@ model User {
   subscription      Subscription?
   integrations     Integration[]
   automations      Automation[]
+  hashtags      Hashtag[]   // Relation to Hashtag model
+
  
   @@map("users")
 }
@@ -111,6 +113,21 @@ model Subscription {
   @@map("subscriptions")
 }
 
+model SubscriptionPlan {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  priceId     String   @unique
+  price       Float
+  interval    String   // monthly, yearly
+  features    String[]
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("subscription_plans")
+}
+
 enum SubscriptionStatus {
   ACTIVE
   PAST_DUE
@@ -120,23 +137,6 @@ enum SubscriptionStatus {
   TRIALING
   UNPAID
   PAUSED
-}
-
-model SubscriptionPlan {
-  id          String   @id @default(cuid())
-  name        String   // e.g., "Basic", "Pro", "Enterprise"
-  description String
-  priceId     String   @unique // Stripe price ID
-  price       Int      // Price in cents
-  currency    String   @default("usd")
-  interval    String   // monthly, yearly
-  features    Json     // List of features included in this plan
-  isActive    Boolean  @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  metadata    Json?    // Additional plan metadata
-
-  @@map("subscription_plans")
 }
 
 model Automation {
@@ -171,4 +171,54 @@ model AutomationTask {
   automation    Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
 
   @@map("automation_tasks")
+}
+
+model Hashtag {
+  id            String     @id @default(cuid())
+  userId        String     
+  name          String     
+  postsCount    Int       @default(0)
+  engagement    Json?      // Engagement metrics (likes, comments, etc.)
+  status        String     @default("active") // active, paused, archived
+  trackedFrom   DateTime   @default(now())
+  lastCheckedAt DateTime?  
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+  category      String?    // e.g., travel, food, lifestyle
+  reach         Int       @default(0)  // Total reach of posts with this hashtag
+  avgEngagement Float?    // Average engagement rate
+  trending      Boolean   @default(false)
+  notes         String?   // User notes about this hashtag
+  competitors   String[]  // Array of competitor accounts using this hashtag
+  metrics       Json?     // Additional metrics (growth rate, best posting times)
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  posts         HashtagPost[]
+
+  @@unique([userId, name])
+  @@index([status, trending])
+  @@map("hashtags")
+}
+
+model HashtagPost {
+  id            String   @id @default(cuid())
+  hashtagId     String
+  postId        String   // Unique ID of the Instagram post
+  caption       String?  @db.Text  // Using Text for longer captions
+  mediaUrl      String?  
+  mediaType     String   @default("image") // image, video, carousel
+  engagement    Json     // Post-level engagement metrics
+  postUrl       String   // Direct link to the post
+  authorHandle  String   // Username of post author
+  authorMetrics Json?    // Author's follower count, etc.
+  postedAt      DateTime // When the post was published
+  location      String?  // Geographic location if available
+  mentions      String[] // Other accounts mentioned
+  otherHashtags String[] // Other hashtags used in post
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  hashtag       Hashtag  @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+
+  @@unique([hashtagId, postId])
+  @@index([postedAt, mediaType])
+  @@map("hashtag_posts")
 }
