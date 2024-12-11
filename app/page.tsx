@@ -7,7 +7,6 @@ import { Hash, Users, BarChart2, Settings, LogOut, ArrowRight, MessageCircle, Bo
 import { useRouter } from "next/navigation";
 import { signOut } from 'next-auth/react';
 import { cn } from "@/lib/utils";
-import Header from '@/components/common/Logo';
 
 const HomePage = () => {
   const router = useRouter();
@@ -18,7 +17,7 @@ const HomePage = () => {
       icon: Hash,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/hashtags",
+      href: "/hashtags",
       description: "Find trending hashtags for your niche",
       stats: "450M+ hashtags"
     },
@@ -27,7 +26,7 @@ const HomePage = () => {
       icon: Users,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/users",
+      href: "/users",
       description: "Discover potential followers and collaborators",
       stats: "100K+ profiles"
     },
@@ -36,7 +35,7 @@ const HomePage = () => {
       icon: MessageCircle,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/automation/dm",
+      href: "/automation/dm",
       description: "Automate Instagram DMs with smart replies",
       stats: "AI-powered"
     },
@@ -45,7 +44,7 @@ const HomePage = () => {
       icon: Zap,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/automation/engagement",
+      href: "/automation/engagement",
       description: "Auto-engage with your target audience",
       stats: "24/7 Active"
     },
@@ -54,7 +53,7 @@ const HomePage = () => {
       icon: Clock,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/automation/scheduler",
+      href: "/automation/scheduler",
       description: "Schedule and auto-publish content",
       stats: "Smart timing"
     },
@@ -63,7 +62,7 @@ const HomePage = () => {
       icon: Target,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/automation/targeting",
+      href: "/automation/targeting",
       description: "Target and engage specific audiences",
       stats: "Precision tools"
     },
@@ -72,7 +71,7 @@ const HomePage = () => {
       icon: BarChart2,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/analytics",
+      href: "/analytics",
       description: "Track your growth and engagement",
       stats: "Real-time data"
     },
@@ -81,7 +80,7 @@ const HomePage = () => {
       icon: Settings,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/app/settings",
+      href: "/settings",
       description: "Customize your experience",
       stats: "Full control"
     }
@@ -98,61 +97,63 @@ const HomePage = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden">
+    <div className="h-screen overflow-hidden bg-gradient-to-b from-zinc-900 via-zinc-900 to-black">
       <div className="container h-full mx-auto p-4">
-        <div className="h-[66vh] flex flex-col animate-fade-in">
+        <div className="h-[66vh] flex flex-col animate-fade-in relative">
+          {/* Ambient background effects */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_-30%,#f059da15,transparent)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_700px_at_80%_60%,#f059da08,transparent)]" />
+          <div className="absolute inset-0 bg-grid-white/[0.02]" />
+          
           {/* Hero Section - More compact */}
-          <div className="relative overflow-hidden rounded-xl border border-zinc-800/50 mb-3">
+          <div className="relative overflow-hidden rounded-xl border border-zinc-800/30 mb-3 bg-gradient-to-br from-zinc-900/50 via-zinc-900/30 to-zinc-900/10 backdrop-blur-sm">
             <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-gradient-to-br from-[#f059da]/20 via-[#f059da]/5 to-transparent" />
-              <div
-                className="absolute inset-0"
-                style={{
-                  backgroundImage: "url('/grid.svg')",
-                  backgroundSize: "24px",
-                  backgroundRepeat: "repeat",
-                  opacity: 0.1,
-                }}
-              />
-              <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_-100px,#f059da15,transparent)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_400px_at_50%_-30%,#f059da10,transparent)]" />
+              <div className="absolute inset-0 bg-grid-white/[0.02]" />
             </div>
 
             <div className="relative p-3 space-y-2">
-              <div className="inline-flex items-center px-2 py-1 rounded-full border border-zinc-800/60 bg-zinc-900/50 backdrop-blur-sm text-xs text-white/90">
+              <div className="inline-flex items-center px-2.5 py-1 rounded-full border border-zinc-800/40 bg-zinc-900/50 backdrop-blur-sm text-xs text-white/90">
+                <span className="mr-1.5 text-[#f059da]">✨</span>
                 Welcome to the future of Instagram growth
               </div>
-              <h2 className="text-xl md:text-2xl font-bold">
-                <span className="text-white">Grow Your Instagram</span>{" "}
-                <span className="text-white/90">With Smart Tools</span>
+              <h2 className="text-xl md:text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/70">
+                Grow Your Instagram{" "}
+                <span className="text-white/80">With Smart Tools</span>
               </h2>
-              <p className="text-white/80 text-xs md:text-sm font-light leading-relaxed max-w-2xl">
+              <p className="text-white/70 text-xs md:text-sm font-light leading-relaxed max-w-2xl">
                 Leverage our tools to expand your reach and track your growth.
               </p>
             </div>
           </div>
 
           {/* Tools Grid - Compact version */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 h-[calc(100%-6rem)] overflow-y-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 h-[calc(100%-6rem)] overflow-y-auto relative">
             {tools.map((tool) => (
               <Card
                 key={tool.label}
-                className="relative group cursor-pointer hover:shadow-lg transition-all duration-300 border-zinc-800/50 bg-zinc-900/50 backdrop-blur-sm h-full"
+                className="group relative cursor-pointer border-zinc-800/30 bg-gradient-to-br from-slate-900 via-slate-900/70 to-slate-900 backdrop-blur-sm hover:shadow-lg hover:shadow-[#f059da]/5 transition-all duration-300"
                 onClick={() => router.push(tool.href)}
               >
-                <div className="p-2 h-full flex flex-col">
-                  <div className={cn("p-1.5 w-8 h-8 rounded-lg mb-2", tool.bgColor)}>
-                    <tool.icon className={cn("w-5 h-5", tool.color)} />
+                <div className="absolute inset-0 bg-[radial-gradient(circle_200px_at_50%_0%,#f059da05,transparent)] opacity-0 group-hover:opacity-100 transition-opacity" />
+                
+                <div className="p-2 h-full flex flex-col relative">
+                  <div className={cn(
+                    "p-1.5 w-8 h-8 rounded-lg mb-2 transition-transform duration-300 group-hover:scale-110",
+                    "bg-gradient-to-br from-[#f059da]/20 to-[#f059da]/5"
+                  )}>
+                    <tool.icon className="w-5 h-5 text-[#f059da]" />
                   </div>
                   <div className="space-y-0.5 flex-grow">
-                    <h3 className="font-semibold text-xs text-white group-hover:text-[#f059da] transition-colors">
+                    <h3 className="font-semibold text-xs text-white/90 group-hover:text-[#f059da] transition-colors">
                       {tool.label}
                     </h3>
-                    <p className="text-white/70 text-[0.65rem] line-clamp-2">
+                    <p className="text-white/60 text-[0.65rem] line-clamp-2">
                       {tool.description}
                     </p>
                   </div>
-                  <div className="flex items-center justify-between mt-1">
-                    <span className="text-[0.6rem] text-white/50">{tool.stats}</span>
+                  <div className="flex items-center justify-between mt-1 pt-1 border-t border-zinc-800/30">
+                    <span className="text-[0.6rem] text-white/40">{tool.stats}</span>
                     <ArrowRight className="w-3 h-3 text-white/30 group-hover:text-[#f059da] group-hover:translate-x-0.5 transition-all" />
                   </div>
                 </div>
@@ -163,11 +164,14 @@ const HomePage = () => {
           {/* Logout Button */}
           <Button
             variant="ghost"
-            className="absolute bottom-2 right-2 text-white/70 hover:text-white hover:bg-zinc-900/50 text-xs py-1 px-2 h-auto"
+            className="absolute bottom-2 right-2 text-white/60 hover:text-white bg-gradient-to-br from-slate-900 via-slate-900/70 to-slate-900 hover:from-slate-800 hover:via-slate-800/70 hover:to-slate-800 text-xs py-1.5 px-3 h-auto rounded-lg border border-zinc-800/30 backdrop-blur-sm group transition-all duration-300"
             onClick={handleLogout}
           >
-            <LogOut className="w-3 h-3 mr-1" />
-            Logout
+            <LogOut className="w-3 h-3 mr-1.5 group-hover:scale-110 transition-transform duration-300" />
+            <span className="relative">
+              Logout
+              <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-[#f059da]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </span>
           </Button>
         </div>
       </div>
