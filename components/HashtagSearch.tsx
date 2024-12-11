@@ -7,10 +7,8 @@ interface HashtagData {
     formatted_media_count?: string;
     media_count?: number;
     name?: string;
-    profile_pic_url?: string;
     subtitle?: string;
   };
-  count?: number;
   items?: Array<{
     id: string;
     caption?: {
@@ -21,6 +19,12 @@ interface HashtagData {
         full_name?: string;
         profile_pic_url?: string;
       };
+    };
+    user?: {
+      username?: string;
+      full_name?: string;
+      profile_pic_url?: string;
+      profile_pic_id?: string;
     };
     like_count?: number;
     comment_count?: number;
@@ -39,12 +43,8 @@ interface HashtagData {
         height: number;
       }>;
     };
-    user?: {
-      username?: string;
-      full_name?: string;
-      profile_pic_url?: string;
-    };
   }>;
+  total?: number;
 }
 
 const formatCount = (count: number): string => {
@@ -98,6 +98,7 @@ export const HashtagSearch = () => {
         setError(result.error);
       } else {
         console.log('Setting hashtag data:', result);
+        console.log('Profile picture URL:', result.data?.additional_data?.profile_pic_url);
         setHashtagData(result.data);
       }
     } catch (err) {
@@ -119,6 +120,13 @@ export const HashtagSearch = () => {
     if (e.key === 'Enter') {
       handleSearch();
     }
+  };
+
+  const getProxiedImageUrl = (originalUrl: string | undefined) => {
+    if (!originalUrl) {
+      return '/default-profile.png'; // You'll need to add this image to your public folder
+    }
+    return `/api/instagram/proxy-image?url=${encodeURIComponent(originalUrl)}`;
   };
 
   return (
@@ -158,11 +166,11 @@ export const HashtagSearch = () => {
         <div>
           <div className="mb-6 bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
             <div className="flex items-center gap-6">
-              {hashtagData.additional_data.profile_pic_url && (
+              {hashtagData.items?.[0]?.user?.profile_pic_url && (
                 <div className="relative w-20 h-20 rounded-full overflow-hidden border-4 border-blue-100">
                   <img
-                    src={hashtagData.additional_data.profile_pic_url}
-                    alt={hashtagData.additional_data.name || 'Hashtag profile'}
+                    src={getProxiedImageUrl(hashtagData.items[0].user.profile_pic_url)}
+                    alt={hashtagData.items[0].user.username || 'Hashtag profile'}
                     className="w-full h-full object-cover"
                   />
                 </div>
@@ -189,9 +197,9 @@ export const HashtagSearch = () => {
                 {getCurrentPagePosts().map((item) => (
                   <div key={item.id} className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden">
                     <div className="relative pb-[100%]">
-                      {item.image_versions?.items[0] && (
+                      {item.image_versions?.items?.[0]?.url && (
                         <img
-                          src={item.image_versions.items[0].url}
+                          src={getProxiedImageUrl(item.image_versions.items[0].url)}
                           alt={item.caption?.text || 'Instagram post'}
                           className="absolute inset-0 w-full h-full object-cover"
                         />
@@ -199,7 +207,7 @@ export const HashtagSearch = () => {
                       {item.video_versions && item.video_versions[0] && (
                         <video
                           src={item.video_versions[0].url}
-                          poster={item.thumbnail_url}
+                          poster={item.thumbnail_url ? getProxiedImageUrl(item.thumbnail_url) : undefined}
                           controls
                           className="absolute inset-0 w-full h-full object-cover"
                         />
@@ -210,7 +218,7 @@ export const HashtagSearch = () => {
                         <div className="flex items-center gap-3 mb-3">
                           {item.user.profile_pic_url && (
                             <img
-                              src={item.user.profile_pic_url}
+                              src={getProxiedImageUrl(item.user.profile_pic_url)}
                               alt={item.user.username || 'User'}
                               className="w-10 h-10 rounded-full border-2 border-gray-100"
                             />
