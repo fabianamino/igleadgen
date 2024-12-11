@@ -4,23 +4,21 @@
 
 export const publicRoutes = [
   "/auth/new-verification",
-  "/dashboard",
-  "/dashboard/hashtags",  
-  "/dashboard/users",  
-  "/dashboard/analytics",  
-  "/dashboard/settings",  
-  "/dashboard/profile",  
-  "/dashboard/features",  
+  "/",
+  "/hashtags",  
+  "/users",  
+  "/analytics",  
+  "/settings",  
+  "/profile",  
+  "/features",  
   "/auth/verify-email",
-  "/auth/new-password",
+  "/auth/new",
   "/auth/reset",
   "/auth/new-verification",
   "/auth/new-password",
   "/auth/login",
   "/auth/register",
   "/auth/error",
-  "/auth/reset",
-  "/auth/new-password"
 ];
 
 /*
@@ -37,13 +35,6 @@ export const authRoutes = [
   "/auth/new-password"
 ];
 
-
-export const adminRoutes = [
-  "/reddit-analytics",
-  // Add other admin routes here
-];
-
-
 // The prefix for the api routes
 //Routes that start with this prefix are used for API authentication and authorization
 // @type {string}
@@ -54,4 +45,9 @@ export const apiAuthPrefix = "/api/auth";
   This is the default redirect path after the user has logged in
   @type {string}
   */
-export const DEFAULT_LOGIN_REDIRECT = "/";
+export const DEFAULT_LOGIN_REDIRECT = "/app/analytics";
+
+export const adminRoutes = [
+  "/reddit-analytics",
+  // Add other admin routes here
+];

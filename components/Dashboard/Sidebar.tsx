@@ -28,13 +28,13 @@ const routes = {
     {
       label: "Dashboard",
       icon: LayoutDashboard,
-      href: "/dashboard",
+      href: "/",
       color: "text-[#f059da]",
     },
     {
       label: "Profile",
       icon: User,
-      href: "/dashboard/profile",
+      href: "/profile",
       color: "text-[#f059da]",
     },
   ],
@@ -42,19 +42,19 @@ const routes = {
     {
       label: "Hashtags",
       icon: Hash,
-      href: "/dashboard/hashtags",
+      href: "/hashtags",
       color: "text-[#f059da]",
     },
     {
       label: "Analytics",
       icon: LineChart,
-      href: "/dashboard/analytics",
+      href: "/analytics",
       color: "text-[#f059da]",
     },
     {
-      label: "Growth",
-      icon: TrendingUp,
-      href: "/dashboard/growth",
+      label: "Find Users",
+      icon: User,
+      href: "/users",
       color: "text-[#f059da]",
     },
   ],
@@ -62,7 +62,7 @@ const routes = {
     {
       label: "Settings",
       icon: Settings,
-      href: "/dashboard/settings",
+      href: "/settings",
       color: "text-[#f059da]",
     },
   ]

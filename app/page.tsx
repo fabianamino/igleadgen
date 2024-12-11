@@ -1,220 +1,178 @@
 'use client';
-import React, { useState, useEffect, useCallback } from 'react';
-import { Button } from '@/components/ui/button';
-import { getRedditAccounts } from '@/app/actions/datadisplay';
-import Header from '@/components/common/Logo';
-import AddAccountModal from '@/components/Dashboard/AccountModal';
+
+import React from 'react';
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Hash, Users, BarChart2, Settings, LogOut, ArrowRight, MessageCircle, Bot, Clock, Target, Instagram, Zap, Database, Share } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { signOut } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
-import UserAccountCard from '@/components/Dashboard/UserAccountCard';
+import { cn } from "@/lib/utils";
+import Header from '@/components/common/Logo';
 
-// Define types for the API responses
-type RedditAccount = {
-  id: string;
-  redditUsername: string;
-  karmaCount: number;
-  hasPassword: boolean;
-};
-
-type GetAccountsResponse = {
-  success: boolean;
-  data?: RedditAccount[];
-  error?: string;
-};
-
-const AccountsPage = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [accounts, setAccounts] = useState<RedditAccount[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [lastFetchTime, setLastFetchTime] = useState(0);
-  const itemsPerPage = 3;
+const HomePage = () => {
   const router = useRouter();
-  
-  const fetchAccounts = useCallback(async () => {
-    // Don't fetch if we've fetched within the last second (debounce)
-    const now = Date.now();
-    if (now - lastFetchTime < 1000) {
-      return;
+
+  const tools = [
+    {
+      label: "Search Hashtags",
+      icon: Hash,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/hashtags",
+      description: "Find trending hashtags for your niche",
+      stats: "450M+ hashtags"
+    },
+    {
+      label: "Find Users",
+      icon: Users,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/users",
+      description: "Discover potential followers and collaborators",
+      stats: "100K+ profiles"
+    },
+    {
+      label: "DM Automation",
+      icon: MessageCircle,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/automation/dm",
+      description: "Automate Instagram DMs with smart replies",
+      stats: "AI-powered"
+    },
+    {
+      label: "Smart Engagement",
+      icon: Zap,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/automation/engagement",
+      description: "Auto-engage with your target audience",
+      stats: "24/7 Active"
+    },
+    {
+      label: "Content Scheduler",
+      icon: Clock,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/automation/scheduler",
+      description: "Schedule and auto-publish content",
+      stats: "Smart timing"
+    },
+    {
+      label: "Growth Targeting",
+      icon: Target,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/automation/targeting",
+      description: "Target and engage specific audiences",
+      stats: "Precision tools"
+    },
+    {
+      label: "Analytics",
+      icon: BarChart2,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/analytics",
+      description: "Track your growth and engagement",
+      stats: "Real-time data"
+    },
+    {
+      label: "Settings",
+      icon: Settings,
+      color: "text-[#f059da]",
+      bgColor: "bg-[#f059da]/10",
+      href: "/app/settings",
+      description: "Customize your experience",
+      stats: "Full control"
     }
-    
-    setIsLoading(true);
-    setError(null);
-    setLastFetchTime(now);
-    
-    try {
-      const result = await getRedditAccounts();
-      
-      if (result.error) {
-        setError(result.error);
-        return;
-      }
-      
-      if (result.data) {
-        setAccounts(result.data);
-      } else {
-        setError('No accounts data received');
-      }
-    } catch (err) {
-      console.error('Fetch error:', err);
-      setError('Failed to fetch accounts. Please try again later.');
-    } finally {
-      setIsLoading(false);
-    }
-  }, [lastFetchTime]);
-  
-  // Initial fetch on mount
-  useEffect(() => {
-    fetchAccounts();
-  }, [fetchAccounts]);
-  
-  // Set up polling with dynamic interval
-  useEffect(() => {
-    const pollInterval = setInterval(() => {
-      // Use a longer polling interval (15 seconds) when there are no accounts
-      const pollingTime = accounts.length === 0 ? 15000 : 5000;
-      fetchAccounts();
-    }, accounts.length === 0 ? 15000 : 5000);
-    
-    return () => clearInterval(pollInterval);
-  }, [fetchAccounts, accounts.length]);
-  
-  // Handle successful account addition
-  const handleAccountAdded = useCallback(() => {
-    fetchAccounts();
-    router.refresh();
-  }, [fetchAccounts, router]);
-  
-  const totalPages = Math.ceil(accounts.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const displayedAccounts = accounts.slice(startIndex, startIndex + itemsPerPage);
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
-  
+  ];
+
   const handleLogout = async () => {
     try {
       await signOut({ redirect: false });
       router.refresh();
       router.push('/auth/login');
     } catch (err) {
-      setError('Failed to sign out. Please try again.');
+      console.error('Failed to sign out. Please try again.');
     }
   };
-  
-  if (error) {
-    return (
-      <div className="min-h-screen bg-red-50 p-4 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-      <p className="text-red-600 text-center font-medium mb-4">Error: {error}</p>
-      <div className="flex justify-center">
-      <Button
-      onClick={fetchAccounts}
-      className="bg-red-600 hover:bg-red-700 text-white"
-      >
-      Try Again
-      </Button>
-      </div>
-      </div>
-      </div>
-    );
-  }
-  
-  if (isLoading && accounts.length === 0) {
-    return (
-      <div className="min-h-screen bg-red-50 p-4 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-      <p className="text-gray-600">Loading accounts...</p>
-      </div>
-      </div>
-    );
-  }
-  
+
   return (
-    <div className="min-h-screen bg-red-50 rounded-xl">
-    <div className="py-5">
-    <Header label="" />
-    </div>
-    <div className="p-4 sm:p-3 lg:p-4">
-    <div className="mx-auto max-w-lg sm:max-w-xl lg:max-w-2xl">
-    <div className="mb-2 flex items-center justify-between">
-    <h1 className="text-xl sm:text-2xl font-bold text-red-900">My Reddit Accounts</h1>
-    <AddAccountModal onAccountAdded={handleAccountAdded} />
-    </div>
-    
-    {accounts.length === 0 ? (
-      <div className="bg-white p-6 rounded-lg shadow-sm text-center">
-      <p className="text-gray-600">No Reddit accounts found. Add one to get started!</p>
+    <div className="h-screen overflow-hidden">
+      <div className="container h-full mx-auto p-4">
+        <div className="h-[66vh] flex flex-col animate-fade-in">
+          {/* Hero Section - More compact */}
+          <div className="relative overflow-hidden rounded-xl border border-zinc-800/50 mb-3">
+            <div className="absolute inset-0">
+              <div className="absolute inset-0 bg-gradient-to-br from-[#f059da]/20 via-[#f059da]/5 to-transparent" />
+              <div
+                className="absolute inset-0"
+                style={{
+                  backgroundImage: "url('/grid.svg')",
+                  backgroundSize: "24px",
+                  backgroundRepeat: "repeat",
+                  opacity: 0.1,
+                }}
+              />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_50%_-100px,#f059da15,transparent)]" />
+            </div>
+
+            <div className="relative p-3 space-y-2">
+              <div className="inline-flex items-center px-2 py-1 rounded-full border border-zinc-800/60 bg-zinc-900/50 backdrop-blur-sm text-xs text-white/90">
+                Welcome to the future of Instagram growth
+              </div>
+              <h2 className="text-xl md:text-2xl font-bold">
+                <span className="text-white">Grow Your Instagram</span>{" "}
+                <span className="text-white/90">With Smart Tools</span>
+              </h2>
+              <p className="text-white/80 text-xs md:text-sm font-light leading-relaxed max-w-2xl">
+                Leverage our tools to expand your reach and track your growth.
+              </p>
+            </div>
+          </div>
+
+          {/* Tools Grid - Compact version */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 h-[calc(100%-6rem)] overflow-y-auto">
+            {tools.map((tool) => (
+              <Card
+                key={tool.label}
+                className="relative group cursor-pointer hover:shadow-lg transition-all duration-300 border-zinc-800/50 bg-zinc-900/50 backdrop-blur-sm h-full"
+                onClick={() => router.push(tool.href)}
+              >
+                <div className="p-2 h-full flex flex-col">
+                  <div className={cn("p-1.5 w-8 h-8 rounded-lg mb-2", tool.bgColor)}>
+                    <tool.icon className={cn("w-5 h-5", tool.color)} />
+                  </div>
+                  <div className="space-y-0.5 flex-grow">
+                    <h3 className="font-semibold text-xs text-white group-hover:text-[#f059da] transition-colors">
+                      {tool.label}
+                    </h3>
+                    <p className="text-white/70 text-[0.65rem] line-clamp-2">
+                      {tool.description}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between mt-1">
+                    <span className="text-[0.6rem] text-white/50">{tool.stats}</span>
+                    <ArrowRight className="w-3 h-3 text-white/30 group-hover:text-[#f059da] group-hover:translate-x-0.5 transition-all" />
+                  </div>
+                </div>
+              </Card>
+            ))}
+          </div>
+
+          {/* Logout Button */}
+          <Button
+            variant="ghost"
+            className="absolute bottom-2 right-2 text-white/70 hover:text-white hover:bg-zinc-900/50 text-xs py-1 px-2 h-auto"
+            onClick={handleLogout}
+          >
+            <LogOut className="w-3 h-3 mr-1" />
+            Logout
+          </Button>
+        </div>
       </div>
-    ) : (
-      <div className="space-y-4">
-      {displayedAccounts.map((account) => (
-        <UserAccountCard
-        key={account.id}
-        id={account.id}
-        username={account.redditUsername}
-        karma={account.karmaCount}
-        hasPassword={account.hasPassword}
-        onPasswordUpdate={fetchAccounts}
-        onDelete={async (id) => {
-          // implement the deletion logic here
-          console.log(`Deleting account with id: ${id}`);
-          // return a promise that resolves when the deletion is complete
-          return Promise.resolve();
-        }}
-        />
-      ))}
-      </div>
-    )}
-    
-    {accounts.length > itemsPerPage && (
-      <div className="mt-6">
-      <div className="flex flex-wrap items-center justify-center gap-2">
-      <Button
-      onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-      disabled={currentPage === 1}
-      variant="outline"
-      className="px-3 py-2"
-      >
-      Previous
-      </Button>
-      
-      <div className="flex flex-wrap gap-1">
-      {pageNumbers.map((pageNumber) => (
-        <Button
-        key={pageNumber}
-        onClick={() => setCurrentPage(pageNumber)}
-        variant={currentPage === pageNumber ? "default" : "outline"}
-        className={currentPage === pageNumber ? 'bg-red-600' : ''}
-        >
-        {pageNumber}
-        </Button>
-      ))}
-      </div>
-      
-      <Button
-      onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-      disabled={currentPage === totalPages}
-      variant="outline"
-      className="px-3 py-2"
-      >
-      Next
-      </Button>
-      </div>
-      </div>
-    )}
-    
-    <div className="mt-6 flex justify-center">
-    <Button
-    onClick={handleLogout}
-    variant="outline"
-    className="px-4 py-2"
-    >
-    Sign Out
-    </Button>
-    </div>
-    </div>
-    </div>
     </div>
   );
 };
 
-export default AccountsPage;
+export default HomePage;
