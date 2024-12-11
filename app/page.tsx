@@ -163,7 +163,7 @@ const HomePage = () => {
             <LogOut className="w-3 h-3 mr-1.5 group-hover:scale-110 transition-transform duration-300" />
             <span className="relative">
               Logout
-              <span className="absolute inset-x-0 -bottom-px h-px bg-gradient-to-r from-transparent via-[#f059da]/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <span className="absolute inset-x-0 -bottom-px h-px opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </span>
           </Button>
         </div>

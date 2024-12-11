@@ -30,9 +30,11 @@ model User {
   role            UserRole @default(USER)
   accounts      Account[]
   isTwoFactorEnabled Boolean   @default(false)
+  subscription      Subscription?
+  integrations     Integration[]
+  automations      Automation[]
  
   @@map("users")
-  RedditAccount RedditAccount[]
 }
 model Account {
   id                 String  @id @default(cuid())
@@ -73,18 +75,100 @@ expires DateTime
 
 }
 
-model RedditAccount {
-  id            String   @id @default(cuid())
-  userId        String
-  redditUsername String
-  redditPassword String? // Making it optional since existing accounts won't have it
-  accessToken   String
-  refreshToken  String
-  tokenExpires  DateTime
-  karmaCount    Int
-  createdAt     DateTime @default(now()) // Adding this to sort by latest
-  updatedAt     DateTime @updatedAt      // Track updates
-  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+model Integration {
+  id          String    @id @default(cuid())
+  userId      String
+  name        String    // e.g., "instagram", "reddit", "twitter"
+  token       String
+  expiresAt   DateTime?
+  username    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  automations Automation[]
 
-  @@unique([userId, redditUsername])
+  @@unique([userId, name])
+  @@map("integrations")
+}
+
+model Subscription {
+  id                 String    @id @default(cuid())
+  userId             String    @unique
+  status             SubscriptionStatus
+  priceId            String
+  customerId         String?
+  stripeSubscriptionId String?
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelAtPeriodEnd  Boolean   @default(false)
+  canceledAt         DateTime?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  features           Json      // Store enabled features for this subscription
+  metadata           Json?     // Additional subscription metadata
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  TRIALING
+  UNPAID
+  PAUSED
+}
+
+model SubscriptionPlan {
+  id          String   @id @default(cuid())
+  name        String   // e.g., "Basic", "Pro", "Enterprise"
+  description String
+  priceId     String   @unique // Stripe price ID
+  price       Int      // Price in cents
+  currency    String   @default("usd")
+  interval    String   // monthly, yearly
+  features    Json     // List of features included in this plan
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  metadata    Json?    // Additional plan metadata
+
+  @@map("subscription_plans")
+}
+
+model Automation {
+  id            String    @id @default(cuid())
+  userId        String
+  integrationId String
+  type          String    // dm, post, comment, etc.
+  status        String    // active, paused, completed, failed
+  config        Json      // Flexible configuration for different automation types
+  stats         Json?     // Statistics and metrics
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  lastRunAt     DateTime?
+  nextRunAt     DateTime?
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  integration   Integration @relation(fields: [integrationId], references: [id], onDelete: Cascade)
+  tasks         AutomationTask[]
+
+  @@map("automations")
+}
+
+model AutomationTask {
+  id            String    @id @default(cuid())
+  automationId  String
+  status        String    // pending, running, completed, failed
+  result        Json?     // Task result data
+  error         String?   // Error message if failed
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  startedAt     DateTime?
+  completedAt   DateTime?
+  automation    Automation @relation(fields: [automationId], references: [id], onDelete: Cascade)
+
+  @@map("automation_tasks")
 }
