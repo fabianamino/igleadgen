@@ -105,6 +105,18 @@ body,
   }
 }
 
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .animate-fade-in {
   animation: fadeIn 0.5s ease-out forwards;
 }
@@ -112,4 +124,8 @@ body,
 .animate-fade-in-up {
   animation: fadeInUp 0.5s ease-out forwards;
   opacity: 0;
+}
+
+.animate-gradient {
+  animation: gradient 15s ease infinite;
 }

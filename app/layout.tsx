@@ -34,29 +34,86 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <div className="h-full relative bg-[#0a0a0a]">
-            {/* Subtle background */}
-            <div className="fixed inset-0 -z-10">
-              {/* Very faint grid */}
+            {/* Creative background */}
+            <div className="fixed inset-0 -z-10 overflow-hidden">
+              {/* Base pattern */}
               <div
                 style={{
                   position: 'absolute',
-                  inset: '-50% -50%',
-                  transform: 'rotateX(75deg)',
+                  inset: 0,
                   backgroundImage: `
-                    linear-gradient(90deg, rgba(240, 89, 218, 0.03) 1px, transparent 1px),
-                    linear-gradient(rgba(240, 89, 218, 0.03) 1px, transparent 1px)
+                    radial-gradient(circle at 50% 50%, rgba(240, 89, 218, 0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 0% 0%, rgba(240, 89, 218, 0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 100% 0%, rgba(240, 89, 218, 0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 0% 100%, rgba(240, 89, 218, 0.03) 0%, transparent 50%),
+                    radial-gradient(circle at 100% 100%, rgba(240, 89, 218, 0.03) 0%, transparent 50%)
                   `,
-                  backgroundSize: '150px 150px',
-                  backgroundPosition: 'center',
-                  transformOrigin: 'center center',
+                }}
+                className="w-full h-full opacity-40"
+              />
+
+              {/* Honeycomb pattern */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  backgroundImage: `
+                    radial-gradient(circle at 0% 0%, transparent 50%, rgba(240, 89, 218, 0.02) 50%, transparent 100%),
+                    radial-gradient(circle at 100% 0%, transparent 50%, rgba(240, 89, 218, 0.02) 50%, transparent 100%),
+                    radial-gradient(circle at 0% 100%, transparent 50%, rgba(240, 89, 218, 0.02) 50%, transparent 100%),
+                    radial-gradient(circle at 100% 100%, transparent 50%, rgba(240, 89, 218, 0.02) 50%, transparent 100%)
+                  `,
+                  backgroundSize: '64px 64px',
+                }}
+                className="w-full h-full opacity-30"
+              />
+
+              {/* Diagonal lines */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  backgroundImage: `
+                    repeating-linear-gradient(
+                      45deg,
+                      transparent,
+                      transparent 2px,
+                      rgba(240, 89, 218, 0.02) 2px,
+                      rgba(240, 89, 218, 0.02) 4px
+                    )
+                  `,
+                }}
+                className="w-full h-full opacity-20"
+              />
+
+              {/* Animated gradient overlay */}
+              <div
+                className="absolute inset-0 opacity-[0.15] mix-blend-overlay animate-gradient"
+                style={{
+                  backgroundImage: `
+                    linear-gradient(
+                      115deg,
+                      transparent 0%,
+                      rgba(240, 89, 218, 0.1) 25%,
+                      transparent 47%,
+                      transparent 53%,
+                      rgba(240, 89, 218, 0.1) 75%,
+                      transparent 100%
+                    )
+                  `,
+                  backgroundSize: '400% 400%',
                 }}
               />
 
-              {/* Soft gradients */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a] via-transparent to-[#0a0a0a]" />
+              {/* Ambient light effects */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#f059da08,transparent)]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_0%_800px,#f059da08,transparent)]" />
               
-              {/* Very subtle glow */}
-              <div className="fixed inset-x-0 bottom-0 h-[50vh] bg-[#f059da]/[0.02] blur-[150px]" />
+              {/* Noise texture */}
+              <div className="absolute inset-0 opacity-[0.15] mix-blend-soft-light bg-[url('/noise.png')]" />
+
+              {/* Vignette effect */}
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent_20%,rgba(0,0,0,0.3)_100%)]" />
             </div>
 
             {/* Content */}

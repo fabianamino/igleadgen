@@ -97,7 +97,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-gradient-to-b from-zinc-900 via-zinc-900 to-black">
+    <div className="h-screen overflow-hidden">
       <div className="container h-full mx-auto p-4">
         <div className="h-[66vh] flex flex-col animate-fade-in relative">
           {/* Ambient background effects */}
@@ -106,14 +106,9 @@ const HomePage = () => {
           <div className="absolute inset-0 bg-grid-white/[0.02]" />
           
           {/* Hero Section - More compact */}
-          <div className="relative overflow-hidden rounded-xl border border-zinc-800/30 mb-3 bg-gradient-to-br from-zinc-900/50 via-zinc-900/30 to-zinc-900/10 backdrop-blur-sm">
-            <div className="absolute inset-0">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_400px_at_50%_-30%,#f059da10,transparent)]" />
-              <div className="absolute inset-0 bg-grid-white/[0.02]" />
-            </div>
-
+          <div className="relative overflow-hidden rounded-xl border border-white/[0.08] mb-3 bg-gradient-to-br from-black/50 via-black/30 to-black/10">
             <div className="relative p-3 space-y-2">
-              <div className="inline-flex items-center px-2.5 py-1 rounded-full border border-zinc-800/40 bg-zinc-900/50 backdrop-blur-sm text-xs text-white/90">
+              <div className="inline-flex items-center px-2.5 py-1 rounded-full border border-white/[0.08] bg-black/50 text-xs text-white/90">
                 <span className="mr-1.5 text-[#f059da]">✨</span>
                 Welcome to the future of Instagram growth
               </div>
@@ -132,11 +127,9 @@ const HomePage = () => {
             {tools.map((tool) => (
               <Card
                 key={tool.label}
-                className="group relative cursor-pointer border-zinc-800/30 bg-gradient-to-br from-slate-900 via-slate-900/70 to-slate-900 backdrop-blur-sm hover:shadow-lg hover:shadow-[#f059da]/5 transition-all duration-300"
+                className="group relative cursor-pointer border border-white/[0.08] hover:border-[#f059da]/20 transition-all duration-300 bg-transparent"
                 onClick={() => router.push(tool.href)}
               >
-                <div className="absolute inset-0 bg-[radial-gradient(circle_200px_at_50%_0%,#f059da05,transparent)] opacity-0 group-hover:opacity-100 transition-opacity" />
-                
                 <div className="p-2 h-full flex flex-col relative">
                   <div className={cn(
                     "p-1.5 w-8 h-8 rounded-lg mb-2 transition-transform duration-300 group-hover:scale-110",
@@ -152,7 +145,7 @@ const HomePage = () => {
                       {tool.description}
                     </p>
                   </div>
-                  <div className="flex items-center justify-between mt-1 pt-1 border-t border-zinc-800/30">
+                  <div className="flex items-center justify-between mt-1 pt-1 border-t border-white/[0.08]">
                     <span className="text-[0.6rem] text-white/40">{tool.stats}</span>
                     <ArrowRight className="w-3 h-3 text-white/30 group-hover:text-[#f059da] group-hover:translate-x-0.5 transition-all" />
                   </div>
@@ -164,7 +157,7 @@ const HomePage = () => {
           {/* Logout Button */}
           <Button
             variant="ghost"
-            className="absolute bottom-2 right-2 text-white/60 hover:text-white bg-gradient-to-br from-slate-900 via-slate-900/70 to-slate-900 hover:from-slate-800 hover:via-slate-800/70 hover:to-slate-800 text-xs py-1.5 px-3 h-auto rounded-lg border border-zinc-800/30 backdrop-blur-sm group transition-all duration-300"
+            className="absolute bottom-2 right-2 text-white/60 hover:text-white bg-gradient-to-br from-black/50 via-black/30 to-black/10 hover:from-black/70 hover:via-black/50 hover:to-black/30 text-xs py-1.5 px-3 h-auto rounded-lg border border-white/[0.08] transition-all duration-300"
             onClick={handleLogout}
           >
             <LogOut className="w-3 h-3 mr-1.5 group-hover:scale-110 transition-transform duration-300" />
