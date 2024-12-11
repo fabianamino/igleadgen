@@ -33,32 +33,29 @@ export async function GET(request: Request) {
       }
     };
 
-    // Updated endpoint URL to match the example format
     const apiUrl = `https://instagram-scraper-api2.p.rapidapi.com/v1/hashtag?hashtag=${encodeURIComponent(hashtag)}`;
     
     console.log('Fetching from RapidAPI...');
     console.log('URL:', apiUrl);
-    console.log('Options:', JSON.stringify(options, null, 2));
 
     const response = await fetch(apiUrl, options);
-
-    console.log('RapidAPI Response Status:', response.status);
-    console.log('RapidAPI Response Headers:', Object.fromEntries(response.headers.entries()));
+    console.log('Response status:', response.status);
 
     if (!response.ok) {
       throw new Error(`Instagram API responded with status: ${response.status}`);
     }
 
-    const rawData = await response.text();
-    console.log('RapidAPI Raw Response:', rawData);
+    const rawResponse = await response.text();
+    console.log('Raw response:', rawResponse);
 
-    // Return the raw response exactly as received
-    return NextResponse.json({ data: rawData }, {
-      status: response.status,
-      headers: {
-        'Content-Type': response.headers.get('content-type') || 'application/json'
-      }
-    });
+    try {
+      const data = JSON.parse(rawResponse);
+      console.log('Parsed data:', JSON.stringify(data, null, 2));
+      return NextResponse.json(data);
+    } catch (parseError) {
+      console.error('Error parsing JSON:', parseError);
+      return NextResponse.json({ error: 'Invalid JSON response from Instagram API' }, { status: 500 });
+    }
 
   } catch (error) {
     console.error('Error in Instagram API route:', error);
