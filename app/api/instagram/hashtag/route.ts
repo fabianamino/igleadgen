@@ -5,6 +5,46 @@ interface InstagramError {
   status?: number;
 }
 
+interface InstagramUser {
+  pk: string;
+  username: string;
+  full_name: string;
+  profile_pic_url: string;
+}
+
+interface InstagramItem {
+  id: string;
+  code?: string;
+  taken_at?: number;
+  pk?: string;
+  media_type?: number;
+  caption?: {
+    text: string;
+  };
+  like_count?: number;
+  comment_count?: number;
+  image_versions2?: {
+    candidates?: Array<{
+      url: string;
+    }>;
+  };
+  thumbnail_url?: string;
+  video_url?: string;
+  user?: InstagramUser;
+}
+
+interface InstagramApiResponse {
+  data?: {
+    additional_data?: {
+      formatted_media_count?: string;
+      media_count?: number;
+      name?: string;
+      subtitle?: string;
+    };
+    items?: InstagramItem[];
+  };
+}
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -55,7 +95,7 @@ export async function GET(request: Request) {
     console.log('Raw Response Length:', rawResponse.length);
 
     try {
-      const data = JSON.parse(rawResponse);
+      const data: InstagramApiResponse = JSON.parse(rawResponse);
       console.log('Raw API response data:', data);
 
       // Ensure we have the correct data structure
