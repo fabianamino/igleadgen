@@ -128,4 +128,4 @@ For support, email support@leadgen.com or join our [Discord community](https://d
 
 ---
 
-Made with  by [Your Name]
+Made with ❤️ by Fabian Amino

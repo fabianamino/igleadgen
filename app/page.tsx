@@ -145,7 +145,7 @@ const HomePage = () => {
                 <div className="relative p-6 space-y-4 flex flex-col items-center text-center">
                   <div className="inline-flex items-center px-3 py-1.5 rounded-full border border-white/[0.08] bg-black/50 text-xs font-medium text-white/90 shadow-lg backdrop-blur-sm">
                     <span className="mr-1.5 text-[#f059da] animate-pulse">✨</span>
-                    Welcome to "Lead Gen" Net Growth
+                    Welcome to &quot;Lead Gen&quot; Net Growth
                   </div>
                   <div className="max-w-lg mx-auto">
                     <h2 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white via-white to-white/70 tracking-tight">

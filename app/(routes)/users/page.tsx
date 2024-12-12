@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/select";
 import { Slider } from "@/components/ui/slider";
 import { useState } from "react";
+import Image from "next/image";
 import {
   Search,
   Users,
@@ -185,10 +186,12 @@ const UsersPage = () => {
                 <div className="flex items-center gap-3">
                   <div className="relative w-12 h-12">
                     <div className="absolute inset-0 bg-gradient-to-br from-[#f059da]/20 to-transparent rounded-full" />
-                    <img
+                    <Image
                       src={user.avatar}
                       alt={user.name}
-                      className="w-full h-full object-cover rounded-full relative z-10"
+                      width={48}
+                      height={48}
+                      className="rounded-full object-cover"
                     />
                   </div>
                   <div>
