@@ -133,7 +133,7 @@ const HomePage = () => {
 
           {/* Tools Grid - Compact version */}
           <div className="flex-1 flex items-center justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 max-w-6xl w-full">
               {tools.map((tool) => (
                 <button
                   key={tool.label}
@@ -143,22 +143,22 @@ const HomePage = () => {
                   {/* Shine overlay */}
                   <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/[0.03] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   
-                  <div className="px-2.5 py-2 h-full flex items-center space-x-2.5 relative">
+                  <div className="px-5 py-4 h-full flex items-center space-x-4 relative">
                     <div className={cn(
-                      "p-1 w-6 h-6 rounded-lg flex-shrink-0 transition-all duration-300",
+                      "p-2 w-10 h-10 rounded-lg flex-shrink-0 transition-all duration-300",
                       "bg-white/[0.03] group-hover:bg-[#f059da]/10 group-active:bg-[#f059da]/5"
                     )}>
-                      <tool.icon className="w-4 h-4 text-white/80 group-hover:text-[#f059da] transition-all duration-300" />
+                      <tool.icon className="w-6 h-6 text-white/80 group-hover:text-[#f059da] transition-all duration-300" />
                     </div>
                     <div className="min-w-0 flex-grow">
-                      <h3 className="font-semibold text-[0.8rem] text-white/90 group-hover:text-white transition-colors truncate leading-tight">
+                      <h3 className="font-semibold text-[1.1rem] text-white/90 group-hover:text-white transition-colors truncate leading-tight">
                         {tool.label}
                       </h3>
-                      <p className="text-white/50 text-[0.65rem] truncate group-hover:text-white/70 transition-colors leading-tight mt-0.5">
+                      <p className="text-white/50 text-[0.85rem] truncate group-hover:text-white/70 transition-colors leading-tight mt-1.5">
                         {tool.description}
                       </p>
                     </div>
-                    <ArrowRight className="w-3.5 h-3.5 text-white/30 group-hover:text-white/70 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
+                    <ArrowRight className="w-5 h-5 text-white/30 group-hover:text-white/70 group-hover:translate-x-0.5 transition-all flex-shrink-0" />
                   </div>
                 </button>
               ))}
