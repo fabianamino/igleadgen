@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
+import { Search, Loader2, Hash, Heart, MessageCircle } from 'lucide-react';
 
 interface HashtagData {
   additional_data?: {
@@ -199,14 +200,22 @@ export default function HashtagSearch() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Enter hashtag to search..."
-            className="flex-1 px-4 py-2.5 bg-white/[0.03] border border-white/[0.08] focus:border-[#f059da]/50 rounded-lg text-white/90 placeholder:text-white/30 outline-none transition-colors duration-200"
+            onKeyPress={handleKeyPress}
+            className="flex-1 p-2 border border-white/10 rounded-lg bg-black/50 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#f059da]/50"
           />
           <button
             onClick={() => searchHashtag(searchTerm)}
             disabled={loading || !searchTerm.trim()}
-            className="px-6 py-2 bg-[#ee46c7] text-white rounded-lg hover:bg-[#f059da] disabled:opacity-50 disabled:hover:bg-[#ee46c7] transition-colors duration-200"
+            className="flex items-center gap-2 px-6 py-2 bg-[#ee46c7] text-white rounded-lg hover:bg-[#f059da] disabled:opacity-50 disabled:hover:bg-[#ee46c7] transition-colors duration-200 md:w-auto w-12"
           >
-            {loading ? 'Searching...' : 'Search'}
+            {loading ? (
+              <Loader2 className="w-5 h-5 text-white animate-spin" />
+            ) : (
+              <Search className="w-5 h-5 text-white" />
+            )}
+            <span className="md:inline hidden">
+              {loading ? 'Searching...' : 'Search'}
+            </span>
           </button>
         </div>
 
@@ -249,24 +258,39 @@ export default function HashtagSearch() {
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-700">Total Posts</h3>
-                  <p className="text-3xl font-bold text-blue-600">
-                    {formatCount(hashtagData.additional_data?.media_count || 0)}
-                  </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
+                <div className="bg-black/20 p-3 md:p-4 rounded-lg flex items-center sm:flex-col sm:items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#f059da]/10">
+                    <Hash className="w-5 h-5 text-[#f059da]" />
+                  </div>
+                  <div className="flex sm:flex-col sm:items-center gap-2">
+                    <h3 className="text-base md:text-lg font-semibold text-white/70 hidden sm:block sm:mb-2">Total Posts</h3>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                      {formatCount(hashtagData.additional_data?.media_count || 0)}
+                    </p>
+                  </div>
                 </div>
-                <div className="p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-700">Average Likes</h3>
-                  <p className="text-3xl font-bold text-blue-600">
-                    {formatCount(avgLikes)}
-                  </p>
+                <div className="bg-black/20 p-3 md:p-4 rounded-lg flex items-center sm:flex-col sm:items-center gap-3">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#f059da]/10">
+                    <Heart className="w-5 h-5 text-[#f059da]" />
+                  </div>
+                  <div className="flex sm:flex-col sm:items-center gap-2">
+                    <h3 className="text-base md:text-lg font-semibold text-white/70 hidden sm:block sm:mb-2">Average Likes</h3>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                      {formatCount(avgLikes)}
+                    </p>
+                  </div>
                 </div>
-                <div className=" p-4 rounded-lg">
-                  <h3 className="text-lg font-semibold text-gray-700">Average Comments</h3>
-                  <p className="text-3xl font-bold text-blue-600">
-                    {formatCount(avgComments)}
-                  </p>
+                <div className="bg-black/20 p-3 md:p-4 rounded-lg flex items-center sm:flex-col sm:items-center gap-3 sm:col-span-2 md:col-span-1">
+                  <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#f059da]/10">
+                    <MessageCircle className="w-5 h-5 text-[#f059da]" />
+                  </div>
+                  <div className="flex sm:flex-col sm:items-center gap-2">
+                    <h3 className="text-base md:text-lg font-semibold text-white/70 hidden sm:block sm:mb-2">Average Comments</h3>
+                    <p className="text-xl sm:text-2xl md:text-3xl font-bold text-white">
+                      {formatCount(avgComments)}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -274,7 +298,7 @@ export default function HashtagSearch() {
             {/* Posts Grid */}
             <div className="rounded-lg shadow-lg p-6">
               <h2 className="text-2xl font-bold mb-6">Recent Posts</h2>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
                 {getCurrentPagePosts().map((item) => (
                   <div key={item.id} className="bg-gray-50 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
                     <div className="relative pb-[100%]">
@@ -309,7 +333,7 @@ export default function HashtagSearch() {
                           </div>
                         )}
                         {item.taken_at && (
-                          <span className="text-sm text-gray-500">{formatDate(item.taken_at)}</span>
+                          <span className="text-sm text-gray-500 hidden md:block">{formatDate(item.taken_at)}</span>
                         )}
                       </div>
 

@@ -7,6 +7,7 @@ export const publicRoutes = [
   "/automation/dm",
   "/hashtag-search",
   "/api-docs",
+  "/hashtag-generator",
   "/",
   "/hashtags",  
   "/users",  
