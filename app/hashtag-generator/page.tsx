@@ -78,19 +78,19 @@ export default function HashtagGenerator() {
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <h1 className="text-3xl font-bold mb-6 text-foreground">Hashtag Generator</h1>
-      <Card className="p-6 bg-background border-border">
+      <h1 className="text-3xl font-bold mb-6 text-white">Hashtag Generator</h1>
+      <Card className="p-6 bg-zinc-900 border-zinc-700">
         <div className="space-y-4">
           <Textarea
             placeholder="Enter your content here to generate relevant hashtags..."
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            className="min-h-[120px] w-full bg-background text-foreground border-input focus:ring-2 focus:ring-ring"
+            className="min-h-[120px] w-full bg-zinc-800 text-white border-zinc-700 focus:ring-2 focus:ring-blue-500 placeholder-zinc-400"
           />
           <Button
             onClick={generateHashtags}
             disabled={isLoading}
-            className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+            className="w-full bg-[#f059da] text-white hover:bg-[#f059da]/90]"
           >
             {isLoading ? (
               <>
@@ -108,13 +108,13 @@ export default function HashtagGenerator() {
 
         {hashtags.length > 0 && (
           <div className="mt-6">
-            <h2 className="text-xl font-semibold mb-3 text-foreground">Generated Hashtags</h2>
-            <div className="bg-muted p-4 rounded-lg border border-border">
-              <p className="break-words text-foreground">{hashtags.join(' ')}</p>
+            <h2 className="text-xl font-semibold mb-3 text-white">Generated Hashtags</h2>
+            <div className="bg-zinc-800 p-4 rounded-lg border border-zinc-700">
+              <p className="break-words text-white">{hashtags.join(' ')}</p>
               <Button
                 variant="secondary"
                 onClick={() => copyToClipboard(hashtags.join(' '))}
-                className="mt-4 bg-secondary text-secondary-foreground hover:bg-secondary/80"
+                className="mt-4 bg-zinc-700 text-white hover:bg-zinc-600"
               >
                 Copy All Hashtags
               </Button>
