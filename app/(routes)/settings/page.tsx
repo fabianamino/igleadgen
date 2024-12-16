@@ -35,8 +35,11 @@ import {
   Target,
   Database,
 } from "lucide-react";
+import { useSession } from 'next-auth/react';
 
 export default function SettingsPage() {
+  const { data: session } = useSession();
+
   return (
     <div className="space-y-8">
       {/* Header */}
@@ -92,17 +95,18 @@ export default function SettingsPage() {
                     <Label className="text-white/90" htmlFor="name">Name</Label>
                     <Input 
                       id="name" 
-                      placeholder="Enter your name" 
-                      className="bg-zinc-900/50 border-zinc-800 text-white placeholder:text-white/40 focus:ring-[#f059da]/50"
+                      value={`${session?.user?.firstName || ''} ${session?.user?.lastName || ''}`}
+                      className="bg-zinc-900/50 border-zinc-800 text-white/90 focus:ring-[#f059da]/50"
+                      readOnly
                     />
                   </div>
                   <div className="space-y-2">
                     <Label className="text-white/90" htmlFor="email">Email</Label>
                     <Input 
                       id="email" 
-                      type="email" 
-                      placeholder="Enter your email" 
-                      className="bg-zinc-900/50 border-zinc-800 text-white placeholder:text-white/40 focus:ring-[#f059da]/50"
+                      value={session?.user?.email || ''}
+                      className="bg-zinc-900/50 border-zinc-800 text-white/90 focus:ring-[#f059da]/50"
+                      readOnly
                     />
                   </div>
                 </div>
@@ -113,6 +117,13 @@ export default function SettingsPage() {
                     placeholder="Tell us about yourself" 
                     className="bg-zinc-900/50 border-zinc-800 text-white placeholder:text-white/40 focus:ring-[#f059da]/50"
                   />
+                </div>
+                <div className="space-y-2">
+                  <Label>Account Type</Label>
+                  <div className="flex items-center gap-2 px-3 py-2 rounded-md bg-zinc-800/50 border border-zinc-700">
+                    <Shield className="w-4 h-4 text-[#f059da]" />
+                    <span>{session?.user?.role === 'ADMIN' ? 'Administrator' : 'Standard User'}</span>
+                  </div>
                 </div>
                 <Button className="bg-[#f059da] hover:bg-[#f059da]/90 text-white">Save Changes</Button>
               </CardContent>
@@ -248,7 +259,7 @@ export default function SettingsPage() {
                   <Input 
                     id="current" 
                     type="password" 
-                    className="bg-zinc-900/50 border-zinc-800 text-white placeholder:text-white/40 focus:ring-[#f059da]/50"
+                    className="bg-zinc-900/50 border-zinc-800 text-white/90 focus:ring-[#f059da]/50"
                   />
                 </div>
                 <div className="space-y-2">
@@ -256,7 +267,7 @@ export default function SettingsPage() {
                   <Input 
                     id="new" 
                     type="password" 
-                    className="bg-zinc-900/50 border-zinc-800 text-white placeholder:text-white/40 focus:ring-[#f059da]/50"
+                    className="bg-zinc-900/50 border-zinc-800 text-white/90 focus:ring-[#f059da]/50"
                   />
                 </div>
                 <div className="space-y-2">
@@ -264,7 +275,7 @@ export default function SettingsPage() {
                   <Input 
                     id="confirm" 
                     type="password" 
-                    className="bg-zinc-900/50 border-zinc-800 text-white placeholder:text-white/40 focus:ring-[#f059da]/50"
+                    className="bg-zinc-900/50 border-zinc-800 text-white/90 focus:ring-[#f059da]/50"
                   />
                 </div>
                 <Button className="bg-[#f059da] hover:bg-[#f059da]/90 text-white">Update Password</Button>

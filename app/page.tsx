@@ -6,10 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Hash, Users, BarChart2, Settings, LogOut, ArrowRight, MessageCircle, Bot, Clock, Target, Instagram, Zap, Database, Share } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { cn } from "@/lib/utils";
 
 const HomePage = () => {
   const router = useRouter();
+  const { data: session } = useSession();
 
   const tools = [
     {
@@ -117,20 +119,22 @@ const HomePage = () => {
           {/* Header */}
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-x-3">
-              <Button
-                onClick={handleLogout}
-                variant="ghost"
-                className="text-white/70 hover:text-white group relative px-4"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-                <LogOut className="h-5 w-5" />
-              </Button>
+              {session && (
+                <Button
+                  onClick={handleLogout}
+                  variant="ghost"
+                  className="text-white/70 hover:text-white group relative px-4"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              )}
               <div className="flex flex-col">
                 <span className="text-lg font-semibold text-white/90">
-                  Dashboard
+                  {session ? `Welcome, ${session.user?.firstName}` : 'Dashboard'}
                 </span>
                 <span className="text-xs text-white/50">
-                  Manage your Instagram growth
+                  {session?.user?.role === 'ADMIN' ? 'Admin Access' : 'Manage your Instagram growth'}
                 </span>
               </div>
             </div>
