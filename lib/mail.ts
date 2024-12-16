@@ -41,10 +41,10 @@ const createEmailTemplate = (
             font-weight: 700;
             line-height: 1.2;
         }
-        .reddit-text {
+        .igleadgen-text {
             color: #ff4500;
         }
-        .growth-text {
+        .igleadgen-text {
             color: #1a1a1a;
         }
         p {
@@ -102,7 +102,7 @@ const createEmailTemplate = (
     <div class="container">
         <div class="logo-container">
             <h1>
-                <span class="reddit-text">Reddit</span><span class="growth-text">Growth</span>
+                <span class="igleadgen-text">IgLeadGen</span><span class="igleadgen-text">igleadgen</span>
             </h1>
         </div>
         <p>${message}</p>
@@ -111,8 +111,8 @@ const createEmailTemplate = (
         </div>
         <p class="warning-text">If you didn't request this, please ignore this email.</p>
         <div class="footer">
-            <p>Thanks,<br><strong>RedditGrowth Team</strong></p>
-            <p>Need help? Contact us at <a href="mailto:support@redditgrowth.com">support@redditgrowth.com</a></p>
+            <p>Thanks,<br><strong>IgLeadGen Team</strong></p>
+            <p>Need help? Contact us at <a href="mailto:support@igleadgen.com">support@igleadgen.com</a></p>
         </div>
     </div>
 </body>
@@ -129,7 +129,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
   );
 
   await resend.emails.send({
-    from: "support@redditgrowth.com",
+    from: "support@igleadgen.com",
     to: email,
     subject: "Reset Your Password",
     html: emailHtml,
@@ -140,7 +140,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   const confirmLink = `https://app.igleadgen.com/auth/new-verification?token=${token}`;
   const emailHtml = createEmailTemplate(
     "Verify Your Email",
-    "Thank you for signing up with RedditGrowth! Please click the button below to verify your email address:",
+    "Thank you for signing up with IgLeadGen. Please click the button below to verify your email address:",
     "VERIFY EMAIL",
     confirmLink
   );
