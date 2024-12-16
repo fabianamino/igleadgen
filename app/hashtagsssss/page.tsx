@@ -11,21 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { formatNumber } from "@/lib/utils";
 import { getHashtags } from "@/actions/get-hashtags";
-
-interface RelatedHashtag {
-  name: string;
-  posts: number;
-}
-
-interface Hashtag {
-  id: string;
-  name: string;
-  posts: number;
-  avgLikes: number;
-  avgComments: number;
-  searchedAt: string;
-  relatedHashtags: RelatedHashtag[];
-}
+import { Hashtag } from "@/types/hashtag";
 
 export default function HashtagsPage() {
   const router = useRouter();
@@ -198,7 +184,7 @@ export default function HashtagsPage() {
                     <div>
                       <p className="text-sm text-white/60 mb-2">Related Hashtags</p>
                       <div className="flex flex-wrap gap-2">
-                        {hashtag.relatedHashtags.map((related: RelatedHashtag) => (
+                        {hashtag.relatedHashtags.map((related: { name: string; posts: number }) => (
                           <span
                             key={related.name}
                             className="text-sm bg-white/10 text-white/80 px-2 py-1 rounded-full"

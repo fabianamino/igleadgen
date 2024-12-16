@@ -1,17 +1,21 @@
 'use server';
 
-import { prisma } from "@/lib/db";
-import { cookies } from "next/headers";
-import { getUserByEmail } from "@/data/user";
+import db from "@/lib/db";
 import { auth } from "@/auth";
-import jwt from "jsonwebtoken";
+import { Prisma } from "@prisma/client";
+import { Hashtag, RelatedHashtag } from "@/types/hashtag";
 
-interface JWTPayload {
-  email?: string;
-  sub?: string;
-}
+type HashtagWithRelations = Prisma.HashtagGetPayload<{
+  include: {
+    relatedToHashtags: {
+      include: {
+        relatedHashtag: true;
+      };
+    };
+  };
+}>;
 
-export async function getHashtags(page: number = 1, pageSize: number = 10) {
+export async function getHashtags(page: number = 1, pageSize: number = 10): Promise<{ hashtags: Hashtag[]; total: number }> {
   try {
     const session = await auth();
     
@@ -20,7 +24,7 @@ export async function getHashtags(page: number = 1, pageSize: number = 10) {
     }
 
     // Get user from database using email
-    const user = await prisma.user.findUnique({
+    const user = await db.user.findUnique({
       where: {
         email: session.user.email
       },
@@ -37,11 +41,12 @@ export async function getHashtags(page: number = 1, pageSize: number = 10) {
     const maxResults = 100;
 
     const [hashtags, total] = await Promise.all([
-      prisma.hashtag.findMany({
+      db.hashtag.findMany({
         where: {
           userId: user.id,
-          NOT: {
-            name: null
+          name: {
+            not: '',
+            contains: ''  // This ensures the field is not null
           }
         },
         skip,
@@ -49,47 +54,42 @@ export async function getHashtags(page: number = 1, pageSize: number = 10) {
         orderBy: [
           {
             searchedAt: 'desc'
-          },
-          {
-            postsCount: 'desc'
           }
         ],
-        select: {
-          id: true,
-          name: true,
-          postsCount: true,
-          avgLikes: true,
-          avgComments: true,
-          searchedAt: true,
-          relatedHashtags: {
-            select: {
+        include: {
+          relatedToHashtags: {
+            include: {
               relatedHashtag: {
                 select: {
                   name: true,
                   postsCount: true
                 }
               }
-            },
-            take: 3
+            }
           }
         }
-      }),
-      prisma.hashtag.count({
+      }) as Promise<HashtagWithRelations[]>,
+      db.hashtag.count({
         where: {
           userId: user.id,
-          NOT: {
-            name: null
+          name: {
+            not: '',
+            contains: ''  // This ensures the field is not null
           }
         }
       })
     ]);
 
-    const formattedHashtags = hashtags.map(hashtag => ({
-      ...hashtag,
+    const formattedHashtags: Hashtag[] = hashtags.map((hashtag) => ({
+      id: hashtag.id,
+      name: hashtag.name,
       posts: hashtag.postsCount,
-      relatedHashtags: hashtag.relatedHashtags.map(rel => ({
-        name: rel.relatedHashtag.name,
-        posts: rel.relatedHashtag.postsCount
+      avgLikes: hashtag.avgLikes,
+      avgComments: hashtag.avgComments,
+      searchedAt: hashtag.searchedAt,
+      relatedHashtags: hashtag.relatedToHashtags.map((relation): RelatedHashtag => ({
+        name: relation.relatedHashtag.name,
+        posts: relation.relatedHashtag.postsCount
       }))
     }));
 

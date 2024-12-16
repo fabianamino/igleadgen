@@ -10,17 +10,14 @@ import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { formatNumber } from "@/lib/utils";
 import { getHashtags } from "@/actions/get-hashtags";
-
-interface RelatedHashtag {
-  name: string;
-}
+import { Hashtag } from "@/types/hashtag";
 
 export default function HashtagsPage() {
   const router = useRouter();
   const { toast } = useToast();
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [hashtags, setHashtags] = useState([]);
+  const [hashtags, setHashtags] = useState<Hashtag[]>([]);
   const [totalHashtags, setTotalHashtags] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -101,7 +98,7 @@ export default function HashtagsPage() {
         ) : (
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {hashtags.map((hashtag: any) => (
+              {hashtags.map((hashtag: Hashtag) => (
                 <Card
                   key={hashtag.id}
                   className="bg-gradient-to-br from-white/10 to-white/5 border-0 p-4 hover:from-white/15 hover:to-white/10 transition-all"
@@ -132,7 +129,7 @@ export default function HashtagsPage() {
                     <div>
                       <p className="text-sm text-white/60 mb-2">Related Hashtags</p>
                       <div className="flex flex-wrap gap-2">
-                        {hashtag.relatedHashtags.map((related: RelatedHashtag) => (
+                        {hashtag.relatedHashtags.map((related) => (
                           <span
                             key={related.name}
                             className="text-sm bg-white/10 text-white/80 px-2 py-1 rounded-full"
