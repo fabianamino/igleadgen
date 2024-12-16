@@ -70,103 +70,122 @@ export default function HashtagsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#13111C] via-[#0F0F0F] to-black">
+    <div className="min-h-screen bg-[#0A0A0B] overflow-hidden">
       {/* Ambient background effects */}
-      <div className="fixed inset-0 bg-[radial-gradient(circle_500px_at_50%_-30%,#f059da15,transparent)]" />
-      <div className="fixed inset-0 bg-[radial-gradient(circle_700px_at_80%_60%,#f059da08,transparent)]" />
-      <div className="fixed inset-0 bg-grid-white/[0.02]" />
+      <div className="fixed inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_800px_at_100%_200px,#f059da15,transparent)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_600px_at_0%_400px,#f059da08,transparent)]" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent,#0A0A0B_80%)]" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-[0.02]" />
+      </div>
 
       <div className="relative">
-        <div className="container mx-auto px-4 py-8">
+        <div className="container mx-auto px-2 sm:px-4 lg:px-6 py-3 sm:py-6 lg:py-8 max-w-[100vw] overflow-x-hidden">
           {/* Header */}
-          <div className={`flex items-center justify-between mb-8 transition-all duration-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
-            <div className="flex items-center gap-4">
-              <Button
-                onClick={() => router.back()}
-                variant="ghost"
-                className="text-white/70 hover:text-white group relative overflow-hidden"
-              >
-                <div className="absolute inset-0 bg-gradient-to-r from-[#f059da]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <ArrowLeft className="w-5 h-5 relative z-10" />
-              </Button>
-              <h1 className="text-2xl font-bold text-white flex items-center gap-2">
-                <Hash className="w-6 h-6 text-[#f059da]" />
-                Saved Hashtags
-              </h1>
-            </div>
-            <Button
-              onClick={() => router.push('/hashtag-search')}
-              className="bg-[#f059da] hover:bg-[#f059da]/90 text-white group relative overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-white/[0.1] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="relative z-10 flex items-center gap-2">
-                <Search className="w-4 h-4" />
-                Search New Hashtags
+          <div className={`space-y-4 sm:space-y-6 transition-all duration-500 ease-out ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
+            <div className="flex flex-col space-y-3 sm:space-y-0 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-2 min-w-0">
+                <Button
+                  onClick={() => router.back()}
+                  variant="ghost"
+                  size="sm"
+                  className="text-white/70 hover:text-white transition-colors shrink-0"
+                >
+                  <ArrowLeft className="h-4 w-4" />
+                </Button>
+                <h1 className="text-lg sm:text-2xl lg:text-3xl font-bold text-white tracking-tight flex items-center gap-2 min-w-0">
+                  <Hash className="h-5 w-5 sm:h-6 sm:w-6 lg:h-8 lg:w-8 text-[#f059da] shrink-0" />
+                  <span className="truncate">Saved Hashtags</span>
+                </h1>
               </div>
-            </Button>
+              <Button
+                onClick={() => router.push('/hashtag-search')}
+                size="sm"
+                className="w-full sm:w-auto bg-[#f059da] hover:bg-[#f059da]/90 text-white shadow-lg shadow-[#f059da]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#f059da]/30 shrink-0"
+              >
+                <Search className="h-4 w-4 mr-1.5" />
+                <span className="truncate">Search New</span>
+              </Button>
+            </div>
+            
+            <div className="h-px bg-gradient-to-r from-transparent via-white/10 to-transparent" />
           </div>
 
           {loading ? (
-            <div className="flex justify-center items-center min-h-[400px]">
+            <div className="flex justify-center items-center min-h-[300px] sm:min-h-[400px] lg:min-h-[500px]">
               <div className="relative">
                 <div className="absolute -inset-4 rounded-full bg-[#f059da]/20 animate-pulse" />
-                <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#f059da] border-t-transparent relative"></div>
+                <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#f059da] border-t-transparent relative" />
               </div>
             </div>
           ) : error ? (
-            <div className={`text-center text-red-500 min-h-[400px] flex items-center justify-center transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-              {error}
+            <div className={`text-center min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] p-4 flex items-center justify-center transition-opacity duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+              <div className="bg-red-500/10 text-red-500 px-3 py-2 rounded-lg border border-red-500/20 max-w-[calc(100vw-2rem)] w-full text-sm sm:text-base">
+                <p className="truncate">{error}</p>
+              </div>
             </div>
           ) : hashtags.length === 0 ? (
-            <div className={`text-center text-white/70 min-h-[400px] flex flex-col items-center justify-center gap-4 transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
-              <Hash className="w-12 h-12 text-[#f059da]/50" />
-              <p className="text-lg">No saved hashtags yet.</p>
+            <div className={`text-center min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] p-4 flex flex-col items-center justify-center gap-4 sm:gap-6 transition-all duration-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'}`}>
+              <div className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-full bg-[#f059da]/10 flex items-center justify-center shrink-0">
+                <Hash className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-[#f059da]" />
+              </div>
+              <div className="space-y-2 max-w-[calc(100vw-2rem)]">
+                <p className="text-lg sm:text-xl font-medium text-white">No saved hashtags yet</p>
+                <p className="text-sm text-white/50 mx-auto">Start by searching for hashtags to analyze their performance</p>
+              </div>
               <Button
                 onClick={() => router.push('/hashtag-search')}
-                className="bg-[#f059da] hover:bg-[#f059da]/90 text-white group relative overflow-hidden"
+                size="sm"
+                className="bg-[#f059da] hover:bg-[#f059da]/90 text-white shadow-lg shadow-[#f059da]/20 transition-all duration-300 hover:shadow-xl hover:shadow-[#f059da]/30"
               >
-                <div className="absolute inset-0 bg-white/[0.1] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                <div className="relative z-10 flex items-center gap-2">
-                  <Search className="w-4 h-4" />
-                  Start Searching Hashtags
-                </div>
+                <Search className="h-4 w-4 mr-1.5" />
+                <span>Start Searching</span>
               </Button>
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 sm:gap-4 lg:gap-6 mt-4 sm:mt-6">
                 {getCurrentPageHashtags().map((hashtag, index) => (
                   <div
                     key={hashtag.id}
-                    className={`group relative overflow-hidden rounded-lg border border-white/[0.08] bg-gradient-to-br from-black/50 via-black/30 to-black/10 p-6 hover:border-[#f059da]/20 transition-all duration-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                    className={`group relative rounded-xl border border-white/[0.08] bg-white/[0.02] backdrop-blur-sm p-3 sm:p-4 lg:p-6 transition-all duration-300 hover:border-[#f059da]/20 hover:bg-white/[0.04] ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
                     style={{ transitionDelay: `${index * 50}ms` }}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent opacity-0 group-hover:opacity-50 transition-opacity" />
-                    <div className="absolute inset-0 bg-gradient-to-br from-[#f059da]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                    <div className="relative flex flex-col gap-4">
-                      <div className="flex items-center gap-3">
-                        <div className="flex items-center justify-center w-10 h-10 rounded-full bg-[#f059da]/10 group-hover:scale-110 transition-transform duration-300">
-                          <Hash className="w-5 h-5 text-[#f059da]" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-[#f059da]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-xl" />
+                    
+                    <div className="relative flex flex-col gap-3 sm:gap-4">
+                      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                        <div className="flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 rounded-full bg-[#f059da]/10 group-hover:scale-110 transition-transform duration-300 shrink-0">
+                          <Hash className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#f059da]" />
                         </div>
-                        <div>
-                          <h3 className="text-lg font-semibold text-white group-hover:text-[#f059da] transition-colors duration-300">#{hashtag.name}</h3>
-                          <p className="text-sm text-white/50">
+                        <div className="min-w-0 flex-1">
+                          <h3 className="text-sm sm:text-base lg:text-lg font-semibold text-white group-hover:text-[#f059da] transition-colors duration-300 truncate">
+                            #{hashtag.name}
+                          </h3>
+                          <p className="text-xs text-white/50 truncate">
                             {formatDistanceToNow(new Date(hashtag.searchedAt), { addSuffix: true })}
                           </p>
                         </div>
                       </div>
-                      <div className="grid grid-cols-3 gap-4 text-center">
-                        <div className="space-y-1 group-hover:transform group-hover:translate-y-[-2px] transition-transform duration-300">
-                          <p className="text-lg font-semibold text-white">{formatNumber(hashtag.postsCount)}</p>
-                          <p className="text-xs text-white/50">Posts</p>
+
+                      <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
+                        <div className="space-y-0.5 sm:space-y-1 text-center p-1.5 sm:p-2 rounded-lg bg-white/[0.02] group-hover:bg-white/[0.04] transition-colors duration-300">
+                          <p className="text-xs sm:text-sm lg:text-base font-semibold text-white group-hover:text-[#f059da] transition-colors duration-300">
+                            {formatNumber(hashtag.postsCount)}
+                          </p>
+                          <p className="text-[10px] text-white/50">Posts</p>
                         </div>
-                        <div className="space-y-1 group-hover:transform group-hover:translate-y-[-2px] transition-transform duration-300 delay-75">
-                          <p className="text-lg font-semibold text-white">{formatNumber(hashtag.avgLikes)}</p>
-                          <p className="text-xs text-white/50">Avg Likes</p>
+                        <div className="space-y-0.5 sm:space-y-1 text-center p-1.5 sm:p-2 rounded-lg bg-white/[0.02] group-hover:bg-white/[0.04] transition-colors duration-300">
+                          <p className="text-xs sm:text-sm lg:text-base font-semibold text-white group-hover:text-[#f059da] transition-colors duration-300">
+                            {formatNumber(hashtag.avgLikes)}
+                          </p>
+                          <p className="text-[10px] text-white/50">Likes</p>
                         </div>
-                        <div className="space-y-1 group-hover:transform group-hover:translate-y-[-2px] transition-transform duration-300 delay-150">
-                          <p className="text-lg font-semibold text-white">{formatNumber(hashtag.avgComments)}</p>
-                          <p className="text-xs text-white/50">Avg Comments</p>
+                        <div className="space-y-0.5 sm:space-y-1 text-center p-1.5 sm:p-2 rounded-lg bg-white/[0.02] group-hover:bg-white/[0.04] transition-colors duration-300">
+                          <p className="text-xs sm:text-sm lg:text-base font-semibold text-white group-hover:text-[#f059da] transition-colors duration-300">
+                            {formatNumber(hashtag.avgComments)}
+                          </p>
+                          <p className="text-[10px] text-white/50">Comments</p>
                         </div>
                       </div>
                     </div>
@@ -176,41 +195,46 @@ export default function HashtagsPage() {
 
               {/* Pagination */}
               {totalPages > 1 && (
-                <div className={`flex justify-center items-center gap-4 mt-8 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <div className={`flex flex-wrap justify-center items-center gap-1.5 mt-4 sm:mt-6 lg:mt-8 transition-all duration-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
                   <Button
                     onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                     disabled={currentPage === 1}
                     variant="ghost"
-                    className="text-white/70 hover:text-white disabled:opacity-50 group relative overflow-hidden"
+                    size="sm"
+                    className="text-white/70 hover:text-white disabled:opacity-50 transition-colors h-6 w-6 p-0"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#f059da]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <ChevronLeft className="w-5 h-5 relative z-10" />
+                    <ChevronLeft className="h-4 w-4" />
                   </Button>
-                  <div className="flex items-center gap-2">
+                  
+                  <div className="flex flex-wrap items-center gap-1">
                     {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                       <Button
                         key={page}
                         onClick={() => setCurrentPage(page)}
                         variant={currentPage === page ? "default" : "ghost"}
-                        className={`${
-                          currentPage === page 
-                            ? "bg-[#f059da] hover:bg-[#f059da]/90 text-white" 
-                            : "text-white/70 hover:text-white"
-                        } relative overflow-hidden group`}
+                        size="sm"
+                        className={`
+                          h-6 w-6 p-0
+                          ${currentPage === page 
+                            ? "bg-[#f059da] hover:bg-[#f059da]/90 text-white shadow-lg shadow-[#f059da]/20" 
+                            : "text-white/70 hover:text-white hover:bg-white/[0.04]"
+                          }
+                          transition-all duration-300 text-xs
+                        `}
                       >
-                        <div className="absolute inset-0 bg-white/[0.1] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        <span className="relative z-10">{page}</span>
+                        {page}
                       </Button>
                     ))}
                   </div>
+
                   <Button
                     onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                     disabled={currentPage === totalPages}
                     variant="ghost"
-                    className="text-white/70 hover:text-white disabled:opacity-50 group relative overflow-hidden"
+                    size="sm"
+                    className="text-white/70 hover:text-white disabled:opacity-50 transition-colors h-6 w-6 p-0"
                   >
-                    <div className="absolute inset-0 bg-gradient-to-r from-[#f059da]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                    <ChevronRight className="w-5 h-5 relative z-10" />
+                    <ChevronRight className="h-4 w-4" />
                   </Button>
                 </div>
               )}
