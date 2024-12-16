@@ -8,8 +8,6 @@ export const publicRoutes = [
   "/hashtag-search",
   "/api-docs",
   "/hashtag-generator",
-  "/",
-  "/hashtags",  
   "/users",  
   "/analytics",  
   "/settings",  
