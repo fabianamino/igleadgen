@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Search, Loader2, Hash, Heart, MessageCircle } from 'lucide-react';
+import { Search, Loader2, Hash, Heart, MessageCircle, BookmarkPlus } from 'lucide-react';
 
 interface HashtagData {
   additional_data?: {
@@ -87,6 +87,7 @@ export default function HashtagSearch() {
   const [error, setError] = useState<string | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 9;
+  const [isSaving, setIsSaving] = useState(false);
 
   const getCurrentPagePosts = () => {
     if (!hashtagData?.items) {
@@ -189,6 +190,43 @@ export default function HashtagSearch() {
     }
   };
 
+  const saveHashtag = async () => {
+    if (!hashtagData?.additional_data?.name) {
+      toast.error("No hashtag data available to save");
+      return;
+    }
+    
+    setIsSaving(true);
+    try {
+      const { avgLikes, avgComments } = calculateAverages();
+      const response = await fetch('/api/hashtags', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: hashtagData.additional_data.name,
+          mediaCount: hashtagData.additional_data.media_count || 0,
+          avgLikes: Math.round(avgLikes) || 0,
+          avgComments: Math.round(avgComments) || 0,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to save hashtag');
+      }
+
+      const savedHashtag = await response.json();
+      toast.success(`Hashtag #${savedHashtag.name} saved successfully!`);
+    } catch (error) {
+      console.error('Error saving hashtag:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to save hashtag');
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const { avgLikes, avgComments } = calculateAverages();
 
   return (
@@ -246,15 +284,29 @@ export default function HashtagSearch() {
                     />
                   </div>
                 )}
-                <div>
-                  <h2 className="text-3xl font-bold text-gray-800 mb-1">
-                    #{hashtagData.additional_data?.name || searchQuery}
-                  </h2>
-                  {hashtagData.additional_data?.formatted_media_count && (
-                    <p className="text-lg text-blue-600 font-semibold">
-                      {hashtagData.additional_data.formatted_media_count} posts
-                    </p>
-                  )}
+                <div className="flex items-center gap-4">
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-800 mb-1">
+                      #{hashtagData.additional_data?.name || searchQuery}
+                    </h2>
+                    {hashtagData.additional_data?.formatted_media_count && (
+                      <p className="text-lg text-blue-600 font-semibold">
+                        {hashtagData.additional_data.formatted_media_count} posts
+                      </p>
+                    )}
+                  </div>
+                  <button
+                    onClick={saveHashtag}
+                    disabled={isSaving}
+                    className="flex items-center gap-2 px-4 py-2 bg-[#ee46c7] text-white rounded-lg hover:bg-[#f059da] disabled:opacity-50 disabled:hover:bg-[#ee46c7] transition-colors duration-200"
+                  >
+                    {isSaving ? (
+                      <Loader2 className="w-5 h-5 animate-spin" />
+                    ) : (
+                      <BookmarkPlus className="w-5 h-5" />
+                    )}
+                    <span>{isSaving ? 'Saving...' : 'Save'}</span>
+                  </button>
                 </div>
               </div>
 
