@@ -1,17 +1,19 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Button } from '@/components/ui/button';
-import { Input } from "@/components/ui/input";
-import { Textarea } from '@/components/ui/textarea';
-import { Card } from '@/components/ui/card';
-import { Loader2, Upload } from 'lucide-react';
-import { toast } from 'sonner';
+import { Loader2, Upload } from "lucide-react";
 
-export default function HashtagGenerator() {
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Card } from "@/components/ui/card";
+import { useToast } from "@/hooks/use-toast";
+
+export default function GenerateHashtagsPage() {
   const router = useRouter();
+  const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [image, setImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string>("");
@@ -34,7 +36,11 @@ export default function HashtagGenerator() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!image) {
-      toast.error("Please upload an image");
+      toast({
+        title: "Error",
+        description: "Please upload an image",
+        variant: "destructive",
+      });
       return;
     }
 
@@ -57,29 +63,35 @@ export default function HashtagGenerator() {
 
       const data = await response.json();
       router.push(`/hashtags?id=${data.id}`);
-      toast.success("Hashtags generated successfully!");
     } catch (error) {
-      console.error("Error:", error);
-      toast.error("Failed to generate hashtags. Please try again.");
+      toast({
+        title: "Error",
+        description: "Failed to generate hashtags. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-3xl">
-      <h1 className="text-3xl font-bold mb-6 text-white">Hashtag Generator</h1>
+    <div className="container max-w-5xl py-8">
+      <div className="mb-8">
+        <h1 className="text-3xl font-bold text-white mb-2">Generate Hashtags</h1>
+        <p className="text-white/60">
+          Upload an image and provide details about your business to generate relevant hashtags
+        </p>
+      </div>
+
       <form onSubmit={handleSubmit}>
-        <Card className="p-6 bg-zinc-900 border-zinc-700">
+        <Card className="p-6 bg-white/5 border-white/10">
           <div className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-white mb-2">
                 Upload Image
               </label>
-              <div 
-                className="flex flex-col items-center justify-center border-2 border-dashed border-zinc-700 rounded-lg p-6 cursor-pointer hover:border-zinc-500 transition"
-                onClick={() => document.getElementById("image-upload")?.click()}
-              >
+              <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/20 rounded-lg p-6 cursor-pointer hover:border-white/30 transition"
+                   onClick={() => document.getElementById("image-upload")?.click()}>
                 <input
                   type="file"
                   id="image-upload"
@@ -98,8 +110,8 @@ export default function HashtagGenerator() {
                   </div>
                 ) : (
                   <div className="text-center">
-                    <Upload className="mx-auto h-12 w-12 text-zinc-400" />
-                    <p className="mt-2 text-sm text-zinc-400">
+                    <Upload className="mx-auto h-12 w-12 text-white/60" />
+                    <p className="mt-2 text-sm text-white/60">
                       Click to upload or drag and drop
                     </p>
                   </div>
@@ -115,7 +127,7 @@ export default function HashtagGenerator() {
                 value={businessName}
                 onChange={(e) => setBusinessName(e.target.value)}
                 placeholder="Enter your business name"
-                className="bg-zinc-800 text-white border-zinc-700"
+                className="bg-white/5 border-white/10 text-white"
                 required
               />
             </div>
@@ -128,7 +140,7 @@ export default function HashtagGenerator() {
                 value={businessDescription}
                 onChange={(e) => setBusinessDescription(e.target.value)}
                 placeholder="Describe what your business does"
-                className="bg-zinc-800 text-white border-zinc-700 min-h-[100px]"
+                className="bg-white/5 border-white/10 text-white"
                 required
               />
             </div>
@@ -141,15 +153,15 @@ export default function HashtagGenerator() {
                 value={targetAudience}
                 onChange={(e) => setTargetAudience(e.target.value)}
                 placeholder="Describe your target audience"
-                className="bg-zinc-800 text-white border-zinc-700 min-h-[100px]"
+                className="bg-white/5 border-white/10 text-white"
                 required
               />
             </div>
 
             <Button
               type="submit"
+              className="w-full"
               disabled={loading}
-              className="w-full bg-[#f059da] text-white hover:bg-[#f059da]/90"
             >
               {loading ? (
                 <>

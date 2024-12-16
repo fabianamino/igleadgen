@@ -233,3 +233,22 @@ model HashtagSearch {
   @@index([userId])
   @@index([query])
 }
+
+model Hashtags {
+  id                 String            @id @default(cuid())
+  userId             String
+  name               String
+  imageUrl           String?
+  businessDescription String?
+  targetAudience     String?
+  searchedAt         DateTime          @default(now())
+  relatedHashtags    RelatedHashtags[]
+}
+
+model RelatedHashtags {
+  id        String   @id @default(cuid())
+  name      String
+  posts     Int      @default(0)
+  hashtagId String
+  hashtag   Hashtags @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+}

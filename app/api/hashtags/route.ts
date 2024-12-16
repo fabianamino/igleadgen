@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
-import { prisma } from "@/lib/db"; // updated named import for db
+import db from "@/lib/db"; // updated named import for db
 
 export async function POST(req: Request) {
   try {
@@ -16,7 +16,7 @@ export async function POST(req: Request) {
       return new NextResponse("Name is required", { status: 400 });
     }
 
-    const hashtag = await prisma.hashtag.create({ // updated db to prisma
+    const hashtag = await db.hashtag.create({ // updated db to prisma
       data: {
         name,
         postsCount: mediaCount || 0,
@@ -40,7 +40,7 @@ export async function GET(req: Request) {
       return new NextResponse("Unauthorized", { status: 401 });
     }
 
-    const hashtags = await prisma.hashtag.findMany({ // updated db to prisma
+    const hashtags = await db.hashtag.findMany({ // updated db to prisma
       where: {
         userId: session.user.id,
       },

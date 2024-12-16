@@ -3,11 +3,21 @@
 import React from 'react';
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Hash, Users, BarChart2, Settings, LogOut, ArrowRight, MessageCircle, Bot, Clock, Target, Instagram, Zap, Database, Share } from "lucide-react";
+import { Hash, Users, BarChart2, Settings, LogOut, ArrowRight, MessageCircle, Bot, Clock, Target, Zap, Database, Share } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import { cn } from "@/lib/utils";
+import dynamic from 'next/dynamic';
+
+const SavedHashtags = dynamic(() => import('@/components/SavedHashtags'), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full p-8 flex justify-center items-center">
+      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#f059da]"></div>
+    </div>
+  ),
+});
 
 const HomePage = () => {
   const router = useRouter();
@@ -108,7 +118,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#13111C] via-[#0F0F0F] to-black">
+    <div className="overflow-hidden bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-[#13111C] via-[#0F0F0F] to-black">
       {/* Ambient background effects */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_500px_at_50%_-30%,#f059da15,transparent)]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_700px_at_80%_60%,#f059da08,transparent)]" />
@@ -163,6 +173,7 @@ const HomePage = () => {
                 </div>
               </div>
 
+
               {/* Tools Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 {tools.map((tool) => (
@@ -196,9 +207,45 @@ const HomePage = () => {
                 ))}
               </div>
             </div>
+
+          
+
           </div>
         </div>
       </div>
+
+        {/* Saved Hashtags Section */}
+        <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-br from-black/50 via-black/30 to-black/10 p-6 my-10">
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/[0.03] to-transparent opacity-50" />
+                <div className="relative space-y-4">
+                  <div className="flex items-center justify-between">
+                    <h2 className="text-xl font-semibold text-white flex items-center gap-2">
+                      <Hash className="w-5 h-5 text-[#f059da]" />
+                      Saved Hashtags
+                    </h2>
+                    <div className="flex items-center gap-2">
+                      <Button
+                        onClick={() => router.push('/hashtag-search')}
+                        variant="ghost"
+                        className="text-white/70 hover:text-white"
+                      >
+                        Search More
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                      <Button
+                        onClick={() => router.push('/hashtags')}
+                        variant="ghost"
+                        className="text-white/70 hover:text-white"
+                      >
+                        View All
+                        <ArrowRight className="w-4 h-4 ml-2" />
+                      </Button>
+                    </div>
+                  </div>
+                  <SavedHashtags />
+                </div>
+              </div>
+
     </div>
   );
 };
