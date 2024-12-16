@@ -120,7 +120,7 @@ const createEmailTemplate = (
 `;
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const resetLink = `https://app.igleaadgen.com/auth/new-password?token=${token}`;
+  const resetLink = `https://app.igleadgen.com/auth/new-password?token=${token}`;
   const emailHtml = createEmailTemplate(
     "Reset Your Password",
     "You've requested to reset your password. Click the button below to set a new password:",
