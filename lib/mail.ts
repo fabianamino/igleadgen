@@ -137,18 +137,26 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `https://app.igleadgen.com/auth/new-verification?token=${token}`;
-  const emailHtml = createEmailTemplate(
-    "Verify Your Email",
-    "Thank you for signing up with IgLeadGen. Please click the button below to verify your email address:",
-    "VERIFY EMAIL",
-    confirmLink
-  );
+  try {
+    const confirmLink = `https://app.igleadgen.com/auth/new-verification?token=${token}`;
+    const emailHtml = createEmailTemplate(
+      "Verify Your Email",
+      "Thank you for signing up with IgLeadGen. Please click the button below to verify your email address:",
+      "VERIFY EMAIL",
+      confirmLink
+    );
 
-  await resend.emails.send({
-    from: "support@igleadgen.com",
-    to: email,
-    subject: "Verify Your Email",
-    html: emailHtml,
-  });
+    const data = await resend.emails.send({
+      from: "support@igleadgen.com",
+      to: email,
+      subject: "Verify Your Email",
+      html: emailHtml,
+    });
+    
+    console.log('Email sent successfully:', data);
+    return data;
+  } catch (error) {
+    console.error('Failed to send verification email:', error);
+    throw error;
+  }
 };
