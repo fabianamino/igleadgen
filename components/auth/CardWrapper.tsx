@@ -35,46 +35,44 @@ const CardWrapper = ({
 }: CardWrapperProps) => {
   return (
     <Card
-    className={cn(
-      "w-full max-w-[800px] min-h-[500px] mx-auto relative",
-      "bg-black text-white",
-      "border-0 shadow-2xl",
-      "transition-all duration-300",
-      "md:flex md:flex-row",
-      "rounded-xl",
-      "hover:shadow-[0_0_15px_rgba(240,89,218,0.3)]",
-      font.className
-    )}
+      className={cn(
+        "w-full relative",
+        "bg-black/40 backdrop-blur-xl text-white",
+        "border border-white/10",
+        "shadow-[0_8px_32px_rgba(0,0,0,0.4)]",
+        "transition-all duration-300",
+        "rounded-2xl",
+        "hover:shadow-[0_8px_32px_rgba(240,89,218,0.2)]",
+        "group",
+        font.className
+      )}
     >
-    {/* Left panel - simplified */}
-    <div className="hidden md:block md:w-1/9 bg-black border-r border-white/10" />
-    
-    {/* Main content container */}
-    <div className="flex-1 flex flex-col min-h-full">
-    {/* Content layout */}
-    <div className="flex-1 flex flex-col p-6 space-y-8">
-    <CardHeader className="p-0">
-    <Header label={headerLabel} />
-    </CardHeader>
-    
-    <CardContent className="flex-1 p-0">
-    {children}
-    </CardContent>
-    
-    {showSocial && (
-      <CardFooter className="p-0">
-      {/* <Social /> */}
-      </CardFooter>
-    )}
-    
-    <CardFooter className="p-0 pt-4 border-t border-white/10">
-    <BackButton 
-    href={backButtonHref} 
-    label={backButtonLabel}
-    />
-    </CardFooter>
-    </div>
-    </div>
+      {/* Gradient border effect */}
+      <div className="absolute -inset-[1px] bg-gradient-to-r from-transparent via-[#f059da]/20 to-transparent rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      
+      {/* Content container */}
+      <div className="relative flex flex-col p-6 sm:p-8">
+        <CardHeader className="p-0 space-y-4">
+          <Header label={headerLabel} />
+        </CardHeader>
+        
+        <CardContent className="flex-1 p-0 mt-8">
+          {children}
+        </CardContent>
+        
+        {showSocial && (
+          <CardFooter className="p-0 mt-6">
+            {/* <Social /> */}
+          </CardFooter>
+        )}
+        
+        <CardFooter className="flex items-center justify-center p-0 mt-6 pt-6 border-t border-white/10">
+          <BackButton 
+            href={backButtonHref} 
+            label={backButtonLabel}
+          />
+        </CardFooter>
+      </div>
     </Card>
   );
 };
