@@ -120,7 +120,7 @@ const createEmailTemplate = (
 `;
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const resetLink = `https://app.redditgrowth.com/auth/new-password?token=${token}`;
+  const resetLink = `https://app.igleaadgen.com/auth/new-password?token=${token}`;
   const emailHtml = createEmailTemplate(
     "Reset Your Password",
     "You've requested to reset your password. Click the button below to set a new password:",
@@ -137,7 +137,7 @@ export const sendPasswordResetEmail = async (email: string, token: string) => {
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
-  const confirmLink = `https://app.redditgrowth.com/auth/new-verification?token=${token}`;
+  const confirmLink = `https://app.igleadgen.com/auth/new-verification?token=${token}`;
   const emailHtml = createEmailTemplate(
     "Verify Your Email",
     "Thank you for signing up with RedditGrowth! Please click the button below to verify your email address:",
@@ -146,7 +146,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
   );
 
   await resend.emails.send({
-    from: "support@redditgrowth.com",
+    from: "support@igleadgen.com",
     to: email,
     subject: "Verify Your Email",
     html: emailHtml,
