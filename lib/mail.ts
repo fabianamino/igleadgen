@@ -4,20 +4,28 @@ import { createEmailTemplate } from "./email-templates";
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export const sendPasswordResetEmail = async (email: string, token: string) => {
-  const resetLink = `https://app.igleadgen.com/auth/new-password?token=${token}`;
-  const emailHtml = createEmailTemplate(
-    "Reset Your Password",
-    "You've requested to reset your password. Click the button below to set a new password:",
-    "RESET PASSWORD",
-    resetLink
-  );
+  try {
+    const resetLink = `https://app.igleadgen.com/auth/new-password?token=${token}`;
+    const emailHtml = createEmailTemplate(
+      "Reset Your Password",
+      "You requested to reset your password. Click the button below to set a new password:",
+      "RESET PASSWORD",
+      resetLink
+    );
 
-  await resend.emails.send({
-    from: "support@igleadgen.com",
-    to: email,
-    subject: "Reset Your Password",
-    html: emailHtml,
-  });
+    const data = await resend.emails.send({
+      from: "IgLeadGen <support@igleadgen.com>",
+      to: email,
+      subject: "Reset Your Password",
+      html: emailHtml,
+    });
+    
+    console.log('Password reset email sent successfully:', data);
+    return data;
+  } catch (error) {
+    console.error('Failed to send password reset email:', error);
+    throw error;
+  }
 };
 
 export const sendVerificationEmail = async (email: string, token: string) => {
@@ -31,7 +39,7 @@ export const sendVerificationEmail = async (email: string, token: string) => {
     );
 
     const data = await resend.emails.send({
-      from: "support@igleadgen.com",
+      from: "IgLeadGen <support@igleadgen.com>",
       to: email,
       subject: "Verify Your Email",
       html: emailHtml,
