@@ -49,15 +49,15 @@ export default function StrategyGenerator() {
 
       const data = await response.json();
 
-      if (!response.ok) {
+      if (!response.ok || data.error) {
         throw new Error(data.error || 'Failed to generate strategy');
       }
 
       setStrategy(data.strategy);
       toast.success("Strategy generated successfully!");
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error:', error);
-      toast.error(error.message || "Failed to generate strategy. Please try again.");
+      toast.error("Failed to generate strategy. Please try again.");
     } finally {
       setLoading(false);
     }

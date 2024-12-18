@@ -6,7 +6,7 @@ export async function POST(req: Request) {
     const session = await auth();
 
     if (!session) {
-      return new NextResponse("Unauthorized", { status: 401 });
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
     const { businessName, businessDescription, targetAudience, goals } = await req.json();
@@ -52,15 +52,13 @@ Format the response in markdown with clear sections and bullet points.`
     });
 
     if (!response.ok) {
-      const errorText = await response.text();
       console.error('API Error:', {
         status: response.status,
-        statusText: response.statusText,
-        error: errorText
+        statusText: response.statusText
       });
       return NextResponse.json(
-        { error: `API responded with status ${response.status}` },
-        { status: response.status }
+        { error: 'Failed to generate strategy' },
+        { status: 500 }
       );
     }
 
@@ -76,7 +74,6 @@ Format the response in markdown with clear sections and bullet points.`
     }
 
     const strategy = data.choices[0].message.content;
-    console.log('Generated strategy:', strategy);
     return NextResponse.json({ strategy });
   } catch (error) {
     console.error('Error in generate-strategy route:', error);
