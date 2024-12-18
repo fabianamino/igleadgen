@@ -70,20 +70,20 @@ const HomePage = () => {
       stats: "AI-powered"
     },
     {
-      label: "Content Scheduler",
+      label: "Strategy Generator",
       icon: Clock,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/automation/scheduler",
+      href: "/strategy-generator",
       description: "Schedule and auto-publish content",
       stats: "Smart timing"
     },
     {
-      label: "Growth Targeting",
+      label: "Linktree Generator",
       icon: Target,
       color: "text-[#f059da]",
       bgColor: "bg-[#f059da]/10",
-      href: "/automation/targeting",
+      href: "/profile",
       description: "Target and engage specific audiences",
       stats: "Precision tools"
     },
