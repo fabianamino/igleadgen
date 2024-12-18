@@ -9,8 +9,13 @@ import { Label } from '@/components/ui/label';
 import { Loader2, Copy, Check, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 export default function StrategyGenerator() {
+  const router = useRouter();
+  const { data: session } = useSession();
+
   const [loading, setLoading] = useState(false);
   const [businessName, setBusinessName] = useState("");
   const [businessDescription, setBusinessDescription] = useState("");

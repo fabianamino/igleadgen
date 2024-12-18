@@ -1,6 +1,7 @@
 {
   "/page": "app/page.js",
-  "/strategy-generator/page": "app/strategy-generator/page.js",
   "/(routes)/profile/page": "app/(routes)/profile/page.js",
+  "/strategy-generator/page": "app/strategy-generator/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/[username]/page": "app/[username]/page.js"
 }
