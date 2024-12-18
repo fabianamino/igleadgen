@@ -18,16 +18,15 @@ export async function POST(req: Request) {
       );
     }
 
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://claude-3-5-sonnet.p.rapidapi.com/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'x-api-key': '175e40e8a2msh1b0a7544f3a19c0p16a088jsn14d59f4ca80a',
-        'anthropic-version': '2023-06-01'
+        'x-rapidapi-host': 'claude-3-5-sonnet.p.rapidapi.com',
+        'x-rapidapi-key': '175e40e8a2msh1b0a7544f3a19c0p16a088jsn14d59f4ca80a'
       },
       body: JSON.stringify({
-        model: 'claude-3-sonnet-20240229',
-        max_tokens: 4000,
+        model: 'claude-3-5-sonnet',
         messages: [
           {
             role: 'user',
@@ -60,7 +59,7 @@ Format the response in markdown with clear sections and bullet points.`
         error: errorText
       });
       return NextResponse.json(
-        { error: 'Failed to generate strategy' },
+        { error: `API responded with status ${response.status}` },
         { status: response.status }
       );
     }
@@ -68,7 +67,7 @@ Format the response in markdown with clear sections and bullet points.`
     const data = await response.json();
     console.log('Raw API response:', JSON.stringify(data, null, 2));
 
-    if (!data?.content) {
+    if (!data?.choices?.[0]?.message?.content) {
       console.error('Unexpected API response structure:', data);
       return NextResponse.json(
         { error: 'Invalid API response format' },
@@ -76,7 +75,8 @@ Format the response in markdown with clear sections and bullet points.`
       );
     }
 
-    return NextResponse.json({ strategy: data.content });
+    const strategy = data.choices[0].message.content;
+    return NextResponse.json({ strategy });
   } catch (error) {
     console.error('Error in generate-strategy route:', error);
     return NextResponse.json(
