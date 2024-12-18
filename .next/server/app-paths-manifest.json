@@ -1,8 +1,9 @@
 {
   "/hashtags/page": "app/hashtags/page.js",
-  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/page": "app/page.js",
   "/hashtag-generator/page": "app/hashtag-generator/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js",
   "/(routes)/profile/page": "app/(routes)/profile/page.js",
+  "/api/hashtags/route": "app/api/hashtags/route.js",
   "/[username]/page": "app/[username]/page.js"
 }
