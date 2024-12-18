@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { getCurrentUser } from "@/actions/user";
+import { getCurrentUser } from "@/actions/user/index";
 
 export async function GET(
   request: NextRequest,
@@ -27,7 +27,8 @@ export async function GET(
       where: { id: params.id },
       select: {
         id: true,
-        name: true,
+        firstName: true,
+        lastName: true,
         email: true,
         image: true,
         username: true,
@@ -54,7 +55,7 @@ export async function GET(
 
     return NextResponse.json(user);
   } catch (error) {
-    console.error("Error fetching user profile:", error);
+    console.error('Error fetching user:', error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

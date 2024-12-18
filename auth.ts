@@ -1,9 +1,11 @@
+// auth.ts
 import NextAuth, { type NextAuthConfig } from "next-auth";
 import authConfig from "@/auth.config";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "@/data/user";
 import db from "@/lib/db";
 import { UserRole } from "@prisma/client";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { Adapter } from "next-auth/adapters";
 
 // List of admin emails
 const ADMIN_EMAILS = [
@@ -72,12 +74,12 @@ export const {
       // For OAuth providers
       if (account?.provider !== "credentials") {
         const isAdmin = isAdminEmail(user.email);
-if (isAdmin && user?.id) {
-  await db.user.update({
-    where: { id: user.id },
-    data: { role: UserRole.ADMIN },
-  });
-}
+        if (isAdmin && user?.id) {
+          await db.user.update({
+            where: { id: user.id },
+            data: { role: UserRole.ADMIN },
+          });
+        }
         return true;
       }
 
@@ -145,7 +147,7 @@ if (isAdmin && user?.id) {
       return token;
     },
   },
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as Adapter,
   session: { strategy: "jwt" },
   ...authConfig,
 });

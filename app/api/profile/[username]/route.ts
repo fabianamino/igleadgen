@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getProfileByUsername } from "@/actions/profile";
+import { getProfileByUsername } from "@/app/actions/profile";
 
 export const revalidate = 3600; // Cache for 1 hour
 
@@ -20,7 +20,7 @@ export async function GET(
       },
     });
   } catch (error) {
-    console.error("Error fetching profile:", error);
+    console.error('Error fetching profile:', error);
     return new NextResponse(null, { status: 500 });
   }
 }

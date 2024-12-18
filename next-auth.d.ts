@@ -1,12 +1,13 @@
 import { UserRole } from "@prisma/client";
 import NextAuth, { type DefaultSession } from "next-auth";
+import { AdapterUser } from "@auth/core/adapters";
 
 export type ExtendedUser = DefaultSession["user"] & {
   role: UserRole;
 };
 
 declare module "next-auth" {
-  interface User {
+  interface User extends AdapterUser {
     firstName?: string | null;
     lastName?: string | null;
     role: UserRole;
@@ -20,7 +21,6 @@ declare module "next-auth" {
       name: string;
       email: string;
       image?: string | null;
-
     };
   }
 }

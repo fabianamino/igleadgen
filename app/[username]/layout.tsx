@@ -2,6 +2,9 @@ import { Metadata } from "next";
 import { getProfileByUsername } from "../actions/profile";
 import { Inter } from 'next/font/google';
 import '../globals.css';
+import { Toaster } from 'sonner';
+import { ThemeProvider } from "@/components/theme-provider";
+import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -30,9 +33,21 @@ export default function ProfileLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SessionProvider>
+            <main className="min-h-screen">
+              <Toaster position="top-center" />
+              {children}
+            </main>
+          </SessionProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

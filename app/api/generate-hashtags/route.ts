@@ -8,16 +8,15 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Input is required' }, { status: 400 });
     }
 
-    const response = await fetch('https://claude-2-1.p.rapidapi.com/messages', {
+    const response = await fetch('https://claude-3-5-sonnet.p.rapidapi.com/', {
       method: 'POST',
       headers: {
-        'x-rapidapi-key': '52655f1cfbmshc28794a26461c71p1a3967jsnc854ec10622d',
-        'x-rapidapi-host': 'claude-2-1.p.rapidapi.com',
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        'x-rapidapi-host': 'claude-3-5-sonnet.p.rapidapi.com',
+        'x-rapidapi-key': '175e40e8a2msh1b0a7544f3a19c0p16a088jsn14d59f4ca80a'
       },
       body: JSON.stringify({
-        model: 'claude-3-opus-20240229',
-        max_tokens: 1024,
+        model: 'claude-3-5-sonnet',
         messages: [
           {
             role: 'user',
@@ -41,7 +40,20 @@ export async function POST(req: Request) {
     }
 
     const data = await response.json();
-    return NextResponse.json(data);
+    console.log('Raw API response:', JSON.stringify(data, null, 2)); // Debug log
+
+    // Extract hashtags from the Claude API response structure
+    if (!data?.choices?.[0]?.message?.content) {
+      console.error('Unexpected API response structure:', data);
+      return NextResponse.json(
+        { error: 'Invalid API response format' },
+        { status: 500 }
+      );
+    }
+
+    const hashtags = data.choices[0].message.content;
+    console.log('Extracted hashtags:', hashtags); // Debug log
+    return NextResponse.json({ hashtags });
   } catch (error) {
     console.error('Error in generate-hashtags route:', error);
     return NextResponse.json(

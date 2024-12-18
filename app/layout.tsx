@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/Dashboard/Navbar";
 import Sidebar from "@/components/Dashboard/Sidebar";
 import { SessionProvider } from "next-auth/react";
+import { headers } from 'next/headers';
 
 const outfit = Outfit({ 
   subsets: ["latin"],
@@ -22,6 +23,10 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headersList = headers();
+  const pathname = headersList.get("x-invoke-path") || "";
+  const isProfilePage = pathname.match(/^\/[^/]+$/); // Matches /{username}
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -38,19 +43,30 @@ export default function RootLayout({
             <div className="relative bg-[#0a0a0a]">
               {/* Content */}
               <div className="flex h-full">
-                {/* Sidebar */}
-                <div className="hidden md:flex h-full md:w-72 md:flex-col md:fixed md:inset-y-0 z-50">
-                  <Sidebar />
-                </div>
+                {!isProfilePage && (
+                  <>
+                    {/* Sidebar */}
+                    <div className="hidden md:flex h-full md:w-72 md:flex-col md:fixed md:inset-y-0 z-50">
+                      <Sidebar />
+                    </div>
 
-                {/* Main content */}
-                <main className="md:pl-72 flex-1 min-h-screen">
-                  <Navbar />
-                  <div className="container mx-auto px-4 py-6 mt-20">
+                    {/* Main content with navbar */}
+                    <main className="md:pl-72 flex-1 min-h-screen">
+                      <Navbar />
+                      <div className="container mx-auto px-4 py-6 mt-20">
+                        <Toaster position="top-center" />
+                        {children}
+                      </div>
+                    </main>
+                  </>
+                )}
+                
+                {isProfilePage && (
+                  <main className="flex-1 min-h-screen">
                     <Toaster position="top-center" />
                     {children}
-                  </div>
-                </main>
+                  </main>
+                )}
               </div>
             </div>
           </SessionProvider>

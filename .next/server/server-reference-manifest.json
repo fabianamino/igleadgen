@@ -1,19 +1,5 @@
 {
   "node": {
-    "fc3ddc6407fd3fd2867977b93e0b5b0c0681d4c5": {
-      "workers": {
-        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
-        "app/[username]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
-        "app/(routes)/profile/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Cuser%5C%5Cindex.ts%22%2C%5B%22%24%24ACTION_0%22%2C%22getCurrentUser%22%2C%22onCurrentUser%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cprofile.ts%22%2C%5B%22getProfileByUsername%22%2C%22updateProfile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cupload.ts%22%2C%5B%22uploadProfileImage%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
-        "app/hashtags/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!"
-      },
-      "layer": {
-        "app/page": "action-browser",
-        "app/[username]/page": "action-browser",
-        "app/(routes)/profile/page": "action-browser",
-        "app/hashtags/page": "action-browser"
-      }
-    },
     "81b507bb2a1a639f0c311bef27f0ff6506cbf676": {
       "workers": {
         "app/[username]/page": "(rsc)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cprofile.ts%22%2C%5B%22getProfileByUsername%22%2C%22updateProfile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Cuser%5C%5Cindex.ts%22%2C%5B%22%24%24ACTION_0%22%2C%22getCurrentUser%22%2C%22onCurrentUser%22%5D%5D%5D&__client_imported__=!",
@@ -64,6 +50,24 @@
         "app/(routes)/profile/page": "action-browser"
       }
     },
+    "fc3ddc6407fd3fd2867977b93e0b5b0c0681d4c5": {
+      "workers": {
+        "app/[username]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
+        "app/hashtags/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
+        "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
+        "app/hashtag-generator/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
+        "app/(routes)/profile/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Cuser%5C%5Cindex.ts%22%2C%5B%22%24%24ACTION_0%22%2C%22getCurrentUser%22%2C%22onCurrentUser%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cprofile.ts%22%2C%5B%22getProfileByUsername%22%2C%22updateProfile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cupload.ts%22%2C%5B%22uploadProfileImage%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
+        "app/(routes)/analytics/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/[username]/page": "action-browser",
+        "app/hashtags/page": "action-browser",
+        "app/page": "action-browser",
+        "app/hashtag-generator/page": "action-browser",
+        "app/(routes)/profile/page": "action-browser",
+        "app/(routes)/analytics/page": "action-browser"
+      }
+    },
     "849473a7a216bb3091b3c992e8f0d918444e444d": {
       "workers": {
         "app/(routes)/profile/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Cuser%5C%5Cindex.ts%22%2C%5B%22%24%24ACTION_0%22%2C%22getCurrentUser%22%2C%22onCurrentUser%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cprofile.ts%22%2C%5B%22getProfileByUsername%22%2C%22updateProfile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cupload.ts%22%2C%5B%22uploadProfileImage%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!"
@@ -74,5 +78,5 @@
     }
   },
   "edge": {},
-  "encryptionKey": "wSg6l3yZRStG6eSjaLzxRAfP72GtxBsjQo0C+0aSeg8="
+  "encryptionKey": "gyOp891NiGsYvgEiQEN4W1O6UdsSVliE7lDUk3ebrD8="
 }
