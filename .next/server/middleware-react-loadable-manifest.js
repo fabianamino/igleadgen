@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST="{\"app\\\\page.tsx -> @/components/SavedHashtags\":{\"id\":\"app\\\\page.tsx -> @/components/SavedHashtags\",\"files\":[\"static/chunks/_app-pages-browser_components_SavedHashtags_tsx.js\"]}}"
