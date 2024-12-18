@@ -76,6 +76,7 @@ Format the response in markdown with clear sections and bullet points.`
     }
 
     const strategy = data.choices[0].message.content;
+    console.log('Generated strategy:', strategy);
     return NextResponse.json({ strategy });
   } catch (error) {
     console.error('Error in generate-strategy route:', error);
