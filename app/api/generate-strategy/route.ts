@@ -18,20 +18,21 @@ export async function POST(req: Request) {
       );
     }
 
-    const response = await fetch('https://claude-3-5-sonnet.p.rapidapi.com/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-rapidapi-host': 'claude-3-5-sonnet.p.rapidapi.com',
-        'x-rapidapi-key': '175e40e8a2msh1b0a7544f3a19c0p16a088jsn14d59f4ca80a'
-      },
-      body: JSON.stringify({
-        model: 'claude-3-5-sonnet',
-        messages: [
-          {
-            role: 'user',
-            content: `Create a detailed Instagram marketing strategy for the following business:
-            
+    try {
+      const response = await fetch('https://claude-3-5-sonnet.p.rapidapi.com/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-rapidapi-host': 'claude-3-5-sonnet.p.rapidapi.com',
+          'x-rapidapi-key': '175e40e8a2msh1b0a7544f3a19c0p16a088jsn14d59f4ca80a'
+        },
+        body: JSON.stringify({
+          model: 'claude-3-5-sonnet',
+          messages: [
+            {
+              role: 'user',
+              content: `Create a detailed Instagram marketing strategy for the following business:
+              
 Business Name: ${businessName}
 Business Description: ${businessDescription}
 Target Audience: ${targetAudience}
@@ -46,39 +47,56 @@ Please provide a comprehensive strategy that includes:
 6. Key Performance Metrics to Track
 
 Format the response in markdown with clear sections and bullet points.`
-          }
-        ]
-      })
-    });
-
-    if (!response.ok) {
-      console.error('API Error:', {
-        status: response.status,
-        statusText: response.statusText
+            }
+          ]
+        })
       });
+
+      let data;
+      const responseText = await response.text();
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('Failed to parse API response:', responseText);
+        return NextResponse.json(
+          { error: 'Invalid response from AI service' },
+          { status: 500 }
+        );
+      }
+
+      if (!response.ok) {
+        console.error('API Error:', {
+          status: response.status,
+          statusText: response.statusText,
+          data
+        });
+        return NextResponse.json(
+          { error: 'Failed to generate strategy' },
+          { status: 500 }
+        );
+      }
+
+      if (!data?.choices?.[0]?.message?.content) {
+        console.error('Unexpected API response structure:', data);
+        return NextResponse.json(
+          { error: 'Invalid API response format' },
+          { status: 500 }
+        );
+      }
+
+      const strategy = data.choices[0].message.content;
+      return NextResponse.json({ strategy });
+    } catch (apiError) {
+      console.error('API request failed:', apiError);
       return NextResponse.json(
-        { error: 'Failed to generate strategy' },
-        { status: 500 }
+        { error: 'Failed to connect to AI service' },
+        { status: 503 }
       );
     }
-
-    const data = await response.json();
-    console.log('Raw API response:', JSON.stringify(data, null, 2));
-
-    if (!data?.choices?.[0]?.message?.content) {
-      console.error('Unexpected API response structure:', data);
-      return NextResponse.json(
-        { error: 'Invalid API response format' },
-        { status: 500 }
-      );
-    }
-
-    const strategy = data.choices[0].message.content;
-    return NextResponse.json({ strategy });
   } catch (error) {
     console.error('Error in generate-strategy route:', error);
     return NextResponse.json(
-      { error: 'Failed to generate strategy' },
+      { error: 'An unexpected error occurred' },
       { status: 500 }
     );
   }

@@ -47,17 +47,27 @@ export default function StrategyGenerator() {
         }
       });
 
-      const data = await response.json();
+      let data;
+      try {
+        data = await response.json();
+      } catch (parseError) {
+        console.error('Failed to parse response:', parseError);
+        throw new Error('Invalid response from server');
+      }
 
       if (!response.ok || data.error) {
         throw new Error(data.error || 'Failed to generate strategy');
       }
 
+      if (!data.strategy) {
+        throw new Error('No strategy received from server');
+      }
+
       setStrategy(data.strategy);
       toast.success("Strategy generated successfully!");
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error:', error);
-      toast.error("Failed to generate strategy. Please try again.");
+      toast.error(error.message || "Failed to generate strategy. Please try again.");
     } finally {
       setLoading(false);
     }
