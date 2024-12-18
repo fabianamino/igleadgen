@@ -18,13 +18,13 @@ export const createEmailTemplate = (
             max-width: 600px;
             margin: 0 auto;
             padding: 20px;
-            background-color: #f8f8f8;
+            background-color: #09090b;
         }
         .container {
-            background-color: #ffffff;
+            background-color: #18181b;
             border-radius: 12px;
             padding: 40px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 12px rgba(240, 89, 218, 0.1);
         }
         .logo-container {
             text-align: center;
@@ -36,14 +36,16 @@ export const createEmailTemplate = (
             font-size: 32px;
             font-weight: 700;
             line-height: 1.2;
+            color: #ffffff;
         }
         .igleadgen-text {
-            color: #ff4500;
+            color: #f059da;
+            font-weight: bold;
         }
         p {
             margin-bottom: 24px;
             font-size: 16px;
-            color: #4a4a4a;
+            color: #a1a1aa;
             line-height: 1.8;
         }
         .button-container {
@@ -52,27 +54,54 @@ export const createEmailTemplate = (
         }
         .button {
             display: inline-block;
-            padding: 14px 32px;
-            background-color: #ff4500;
-            color: #ffffff !important;
+            padding: 12px 24px;
+            background-color: #f059da;
+            color: #ffffff;
             text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 4px rgba(255, 69, 0, 0.2);
+            border-radius: 6px;
+            font-weight: 500;
+            transition: background-color 0.2s;
+        }
+        .button:hover {
+            background-color: #d940c0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 14px;
+            color: #71717a;
+        }
+        .social-links {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .social-link {
+            color: #f059da;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+        .social-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="logo-container">
-            <h1><span class="igleadgen-text">IgLeadGen</span></h1>
+            <span class="igleadgen-text" style="font-size: 24px;">IGLeadGen</span>
         </div>
         <h1>${title}</h1>
         <p>${message}</p>
         <div class="button-container">
             <a href="${buttonLink}" class="button">${buttonText}</a>
+        </div>
+        <div class="footer">
+            <p>  ${new Date().getFullYear()} IGLeadGen. All rights reserved.</p>
+            <div class="social-links">
+                <a href="#" class="social-link">Twitter</a>
+                <a href="#" class="social-link">Instagram</a>
+                <a href="#" class="social-link">LinkedIn</a>
+            </div>
         </div>
     </div>
 </body>

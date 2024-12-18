@@ -167,7 +167,7 @@ export default async function ProfilePage({ params }: ProfilePageProps) {
     if (profile.website) {
       const link = formatSocialUrl('website', profile.website);
       if (link) {
-        socialLinks.push({ icon: Globe, link, label: "Website", color: "#0ea5e9", bgColor: "rgba(14, 165, 233, 0.1)" });
+        socialLinks.push({ icon: Globe, link, label: "Website", color: "#f46ee9", bgColor: "rgba(14, 165, 233, 0.1)" });
       }
     }
 
