@@ -9,8 +9,17 @@ import { Label } from '@/components/ui/label';
 import { Loader2, Copy, Check, Download } from 'lucide-react';
 import { toast } from 'sonner';
 import ReactMarkdown from 'react-markdown';
+import { useSession } from 'next-auth/react';
+import { redirect } from 'next/navigation';
 
 export default function StrategyGenerator() {
+  const { data: session, status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      redirect('/auth');
+    },
+  });
+
   const [loading, setLoading] = useState(false);
   const [businessName, setBusinessName] = useState("");
   const [businessDescription, setBusinessDescription] = useState("");
@@ -18,6 +27,14 @@ export default function StrategyGenerator() {
   const [goals, setGoals] = useState("");
   const [strategy, setStrategy] = useState<string>("");
   const [copied, setCopied] = useState(false);
+
+  if (status === "loading") {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="h-8 w-8 animate-spin" />
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
