@@ -4,12 +4,14 @@
       "workers": {
         "app/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
         "app/(routes)/profile/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Cuser%5C%5Cindex.ts%22%2C%5B%22%24%24ACTION_0%22%2C%22getCurrentUser%22%2C%22onCurrentUser%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cprofile.ts%22%2C%5B%22getProfileByUsername%22%2C%22updateProfile%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Capp%5C%5Cactions%5C%5Cupload.ts%22%2C%5B%22uploadProfileImage%22%5D%5D%2C%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
-        "app/[username]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!"
+        "app/[username]/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!",
+        "app/_not-found/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Cfabia%5C%5CDesktop%5C%5Cleadgen%5C%5Cactions%5C%5Clogout.ts%22%2C%5B%22logout%22%5D%5D%5D&__client_imported__=true!"
       },
       "layer": {
         "app/page": "action-browser",
         "app/(routes)/profile/page": "action-browser",
-        "app/[username]/page": "action-browser"
+        "app/[username]/page": "action-browser",
+        "app/_not-found/page": "action-browser"
       }
     },
     "31e7e262408f3e2243f28571f004467a388f5394": {

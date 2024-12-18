@@ -65,7 +65,7 @@ export default function ProfilePage() {
             const shareUsername = profileData.username || 
               `${profileData.firstName?.toLowerCase?.() || ''}${profileData.lastName?.toLowerCase?.() || ''}`.replace(/[^a-z0-9]/g, '') || 
               'profile';
-            setShareUrl(`igleadgen.com/${shareUsername}`);
+            setShareUrl(`app.igleadgen.com/${shareUsername}`);
           }
         }
       } catch (error) {
@@ -101,8 +101,8 @@ export default function ProfilePage() {
       setIsLoading(true);
       const formData = new FormData();
       formData.append("file", file);
-      const imageUrl = await uploadProfileImage(formData);
-      const updatedUser = await updateProfile({ image: imageUrl });
+      const response = await uploadProfileImage(formData);
+      const updatedUser = await updateProfile({ image: response.url });
       setUser(updatedUser);
       toast.success("Profile image updated");
     } catch (error) {
