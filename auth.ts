@@ -146,7 +146,7 @@ if (isAdmin && user?.id) {
       return token;
     },
   },
-  adapter: PrismaAdapter(db) as Adapter,
+  adapter: PrismaAdapter(db) as unknown as Adapter,
   session: { strategy: "jwt" },
   ...authConfig,
 });
