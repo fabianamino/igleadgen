@@ -4,6 +4,7 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import { getUserById } from "@/data/user";
 import db from "@/lib/db";
 import { UserRole } from "@prisma/client";
+import { Adapter } from "next-auth/adapters"
 
 // List of admin emails
 const ADMIN_EMAILS = [
@@ -145,7 +146,7 @@ if (isAdmin && user?.id) {
       return token;
     },
   },
-  adapter: PrismaAdapter(db),
+  adapter: PrismaAdapter(db) as Adapter,
   session: { strategy: "jwt" },
   ...authConfig,
 });
