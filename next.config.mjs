@@ -3,9 +3,6 @@ const nextConfig = {
   images: {
     domains: ['randomuser.me', 'images.unsplash.com'], // Add domains for avatar images
   },
-  experimental: {
-    serverActions: true,
-  },
   async rewrites() {
     return [
       {

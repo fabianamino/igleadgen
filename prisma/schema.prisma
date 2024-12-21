@@ -15,29 +15,60 @@ datasource db {
 }
 
 enum UserRole {
-  ADMIN
   USER
+  ADMIN
   VERIFIED_USER
 }
 
-model User {
-  id                 String          @id @default(cuid())
-  firstName          String?
-  lastName           String?
-  email              String?         @unique
-  emailVerified      DateTime?       @map("email_verified")
-  image              String?
-  password           String?
-  role               UserRole        @default(USER)
-  accounts           Account[]
-  isTwoFactorEnabled Boolean         @default(false)
-  subscription       Subscription?
-  integrations       Integration[]
-  automations        Automation[]
-  hashtags           Hashtag[] // Relation to Hashtag model
-  hashtagSearches    HashtagSearch[] // Added relation to HashtagSearch
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  INCOMPLETE
+  INCOMPLETE_EXPIRED
+  TRIALING
+  UNPAID
+  PAUSED
+  INACTIVE
+  CANCELLED
+}
 
-  @@map("users")
+model User {
+  id                String    @id @default(cuid())
+  firstName         String?
+  lastName          String?
+  email            String?   @unique
+  emailVerified    DateTime?
+  image            String?
+  password         String?
+  role             UserRole  @default(USER)
+  isTwoFactorEnabled Boolean @default(false)
+  
+  // Keep existing social fields
+  username         String?
+  bio              String?
+  location         String?
+  website          String?
+  twitter          String?
+  facebook         String?
+  instagram        String?
+  linkedin         String?
+  youtube          String?
+  github           String?
+  discord          String?
+  tiktok           String?
+
+  // Relations
+  accounts         Account[]
+  sessions        Session[]
+  subscription    Subscription?
+  integrations    Integration[]
+  automations     Automation[]
+  hashtags        Hashtag[]
+  hashtagSearches HashtagSearch[]
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 }
 
 model Account {
@@ -127,17 +158,6 @@ model SubscriptionPlan {
   updatedAt   DateTime @updatedAt
 
   @@map("subscription_plans")
-}
-
-enum SubscriptionStatus {
-  ACTIVE
-  PAST_DUE
-  CANCELED
-  INCOMPLETE
-  INCOMPLETE_EXPIRED
-  TRIALING
-  UNPAID
-  PAUSED
 }
 
 model Automation {
@@ -251,4 +271,14 @@ model RelatedHashtags {
   posts     Int      @default(0)
   hashtagId String
   hashtag   Hashtags @relation(fields: [hashtagId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
 }
