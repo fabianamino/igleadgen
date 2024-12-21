@@ -472,7 +472,7 @@ function AdminPage() {
               ) : (
                 <div className="text-center py-4">
                   <p className="text-zinc-400">
-                    This user's subscription is already {selectedUser?.subscription.status}.
+                    This user&apos;s subscription is already {selectedUser?.subscription.status}.
                   </p>
                   <Button
                     onClick={() => setIsSubscriptionModalOpen(false)}
